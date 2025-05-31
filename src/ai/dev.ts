@@ -1,1 +1,6 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/contract-risk-scanner.ts';
+import '@/ai/flows/basic-clause-decoder.ts';
+import '@/ai/flows/one-click-protection.ts';
