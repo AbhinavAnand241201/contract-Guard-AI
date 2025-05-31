@@ -1,11 +1,16 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Toaster }
-from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/toaster';
+import { AppHeader } from '@/components/header';
+import { AppFooter } from '@/components/footer';
 
 export const metadata: Metadata = {
-  title: 'ContractGuard AI',
-  description: 'AI-powered contract protection platform',
+  title: {
+    default: 'ContractGuard AI - Your AI-Powered Contract Co-Pilot',
+    template: '%s | ContractGuard AI',
+  },
+  description: 'Secure your agreements with AI-driven contract analysis, clause decoding, and risk protection. ContractGuard AI helps you understand and improve your contracts effortlessly.',
+  keywords: ['contract analysis', 'ai legal tech', 'contract review', 'legal ai', 'risk management', 'clause decoder'],
 };
 
 export default function RootLayout({
@@ -20,8 +25,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-body antialiased min-h-screen flex flex-col">
-        {children}
+      <body className="font-body antialiased min-h-screen flex flex-col bg-background text-foreground">
+        <AppHeader />
+        <div className="flex-grow w-full">
+          {children}
+        </div>
+        <AppFooter />
         <Toaster />
       </body>
     </html>

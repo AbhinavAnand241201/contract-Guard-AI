@@ -1,5 +1,6 @@
 import { Shield } from 'lucide-react';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export function AppHeader() {
   return (
@@ -9,7 +10,20 @@ export function AppHeader() {
           <Shield className="w-7 h-7" />
           <h1 className="text-2xl font-semibold font-headline">ContractGuard AI</h1>
         </Link>
-        {/* Navigation items can be added here if needed */}
+        <nav className="flex items-center gap-4">
+          <Link href="/#features" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            Features
+          </Link>
+          <Link href="/pricing" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            Pricing
+          </Link>
+          <Link href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
+            Dashboard
+          </Link>
+          <Button asChild size="sm">
+            <Link href="/dashboard">Get Started</Link>
+          </Button>
+        </nav>
       </div>
     </header>
   );

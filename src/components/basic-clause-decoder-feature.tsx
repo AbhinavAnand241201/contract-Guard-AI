@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { DecodeClauseInput, DecodeClauseOutput } from '@/ai/flows/basic-clause-decoder';
@@ -7,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { AlertCircle, CheckCircle, Loader2, MessageSquareText, Sparkles } from 'lucide-react';
+import { AlertCircle, Loader2, MessageSquareText, Sparkles } from 'lucide-react';
 import React, { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -40,7 +41,7 @@ export function BasicClauseDecoderFeature() {
         title: "Clause Decoded",
         description: "Explanation generated successfully.",
         variant: "default",
-        className: "bg-accent text-accent-foreground"
+        className: "bg-primary text-primary-foreground" // Using primary for success toast
       });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
@@ -57,7 +58,7 @@ export function BasicClauseDecoderFeature() {
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="bg-muted/50">
+      <CardHeader className="bg-muted/30"> {/* Changed background */}
         <div className="flex items-center gap-3">
           <MessageSquareText className="w-8 h-8 text-primary" />
           <div>
@@ -74,13 +75,13 @@ export function BasicClauseDecoderFeature() {
             value={clauseText}
             onChange={(e) => setClauseText(e.target.value)}
             placeholder="Paste or type your legal clause here..."
-            rows={5}
-            className="resize-none text-sm p-3 focus:border-primary transition-colors"
+            rows={6} // Increased rows
+            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background"
           />
         </div>
 
         {error && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="mt-4">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -88,18 +89,18 @@ export function BasicClauseDecoderFeature() {
         )}
 
         {explanation && (
-          <div className="space-y-4 pt-4 border-t">
+          <div className="space-y-4 pt-6 border-t mt-6">
             <h3 className="text-xl font-semibold font-headline text-primary">Explanation</h3>
-            <Card className="bg-muted/30">
+            <Card className="bg-muted/50 border"> {/* Changed background and added border */}
               <CardContent className="p-4">
-                <p className="text-sm whitespace-pre-wrap">{explanation}</p>
+                <p className="text-sm whitespace-pre-wrap leading-relaxed">{explanation}</p>
               </CardContent>
             </Card>
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t p-6">
-        <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+      <CardFooter className="border-t p-6 bg-muted/30">
+        <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />

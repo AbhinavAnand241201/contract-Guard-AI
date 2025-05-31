@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { ContractRiskScannerInput, ContractRiskScannerOutput } from '@/ai/flows/contract-risk-scanner';
@@ -56,8 +57,9 @@ export function ContractRiskScannerFeature() {
           title: "Analysis Complete",
           description: "Contract risk assessment finished successfully.",
           variant: "default",
-          className: "bg-accent text-accent-foreground"
+          className: "bg-primary text-primary-foreground" // Using primary for success toast
         });
+        setIsLoading(false); // Set loading to false here after success
       };
       reader.onerror = () => {
         throw new Error("Error reading file.");
@@ -70,15 +72,15 @@ export function ContractRiskScannerFeature() {
         description: errorMessage,
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
-    }
+      setIsLoading(false); // Also set loading to false on error
+    } 
+    // Removed finally block for setIsLoading as it's handled in onload/onerror/catch
   };
 
   const getRiskScoreColor = (score: number) => {
-    if (score > 70) return 'bg-destructive'; // Red for high risk
-    if (score > 40) return 'bg-yellow-500'; // Yellow for medium risk
-    return 'bg-green-500'; // Green for low risk
+    if (score > 70) return 'bg-destructive'; 
+    if (score > 40) return 'bg-yellow-500'; 
+    return 'bg-green-500'; 
   };
   
   const getRiskLevelText = (score: number) => {
@@ -90,7 +92,7 @@ export function ContractRiskScannerFeature() {
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="bg-muted/50">
+      <CardHeader className="bg-muted/30"> {/* Changed background for slight differentiation */}
         <div className="flex items-center gap-3">
           <FileText className="w-8 h-8 text-primary" />
           <div>
@@ -102,21 +104,21 @@ export function ContractRiskScannerFeature() {
       <CardContent className="p-6 space-y-6">
         <div className="space-y-2">
           <Label htmlFor="contract-file" className="text-base font-medium">Upload Contract Document</Label>
-          <div className="flex items-center gap-3 p-4 border-2 border-dashed rounded-lg hover:border-primary transition-colors">
-            <UploadCloud className="w-10 h-10 text-muted-foreground" />
+          <div className="flex flex-col sm:flex-row items-center gap-3 p-4 border-2 border-dashed rounded-lg hover:border-primary transition-colors bg-background">
+            <UploadCloud className="w-10 h-10 text-muted-foreground sm:mb-0 mb-2" />
             <Input
               id="contract-file"
               type="file"
               onChange={handleFileChange}
-              className="flex-grow file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+              className="flex-grow file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-input file:bg-primary/10 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20 cursor-pointer"
               accept=".pdf,.doc,.docx,.txt"
             />
           </div>
-          {file && <p className="text-sm text-muted-foreground">Selected file: {file.name}</p>}
+          {file && <p className="text-sm text-muted-foreground mt-2">Selected file: {file.name}</p>}
         </div>
 
         {error && (
-          <Alert variant="destructive">
+          <Alert variant="destructive" className="mt-4">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -124,49 +126,49 @@ export function ContractRiskScannerFeature() {
         )}
 
         {analysisResult && (
-          <div className="space-y-6 pt-4 border-t">
+          <div className="space-y-6 pt-6 border-t mt-6">
             <h3 className="text-xl font-semibold font-headline text-primary">Analysis Results</h3>
             
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2 text-lg">
                   <ShieldCheck className="w-6 h-6 text-primary" />
                   Overall Risk Score: {analysisResult.riskScore}/100
                 </CardTitle>
-                <CardDescription>{getRiskLevelText(analysisResult.riskScore)}</CardDescription>
+                <CardDescription className="font-medium">{getRiskLevelText(analysisResult.riskScore)}</CardDescription>
               </CardHeader>
               <CardContent>
-                <Progress value={analysisResult.riskScore} className={`h-3 [&>div]:${getRiskScoreColor(analysisResult.riskScore)}`} />
+                <Progress value={analysisResult.riskScore} className={`h-3 rounded-full [&>div]:${getRiskScoreColor(analysisResult.riskScore)}`} />
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
-                <CardTitle>Risk Report</CardTitle>
+                <CardTitle className="text-lg">Risk Report</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm whitespace-pre-wrap bg-muted/30 p-4 rounded-md max-h-60 overflow-y-auto">{analysisResult.riskReport}</p>
+                <p className="text-sm whitespace-pre-wrap bg-muted/50 p-4 rounded-md max-h-60 overflow-y-auto border">{analysisResult.riskReport}</p>
               </CardContent>
             </Card>
             
-            <Card>
+            <Card className="bg-card">
               <CardHeader>
-                <CardTitle>Identified Risk Factors</CardTitle>
+                <CardTitle className="text-lg">Identified Risk Factors</CardTitle>
               </CardHeader>
               <CardContent>
                 {analysisResult.riskFactors.length > 0 ? (
                   <ul className="space-y-2">
                     {analysisResult.riskFactors.map((factor, index) => (
-                      <li key={index} className="flex items-start gap-2 p-2 bg-muted/30 rounded-md">
-                        <AlertCircle className="w-5 h-5 text-destructive mt-1 shrink-0" /> 
+                      <li key={index} className="flex items-start gap-2 p-3 bg-muted/50 rounded-md border">
+                        <AlertCircle className="w-5 h-5 text-destructive mt-0.5 shrink-0" /> 
                         <span className="text-sm">{factor}</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="flex items-center gap-2 text-muted-foreground p-2 bg-muted/30 rounded-md">
+                  <div className="flex items-center gap-2 text-muted-foreground p-3 bg-muted/50 rounded-md border">
                     <CheckCircle className="w-5 h-5 text-green-500" />
-                    <p>No specific risk factors highlighted by the AI in this summary.</p>
+                    <p className="text-sm">No specific risk factors highlighted by the AI in this summary.</p>
                   </div>
                 )}
               </CardContent>
@@ -174,8 +176,8 @@ export function ContractRiskScannerFeature() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t p-6">
-        <Button onClick={handleSubmit} disabled={isLoading || !file} className="w-full sm:w-auto text-base py-3 px-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+      <CardFooter className="border-t p-6 bg-muted/30">
+        <Button onClick={handleSubmit} disabled={isLoading || !file} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
