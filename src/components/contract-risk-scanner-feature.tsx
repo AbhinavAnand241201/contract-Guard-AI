@@ -57,9 +57,9 @@ export function ContractRiskScannerFeature() {
           title: "Analysis Complete",
           description: "Contract risk assessment finished successfully.",
           variant: "default",
-          className: "bg-primary text-primary-foreground" // Using primary for success toast
+          className: "bg-primary text-primary-foreground"
         });
-        setIsLoading(false); // Set loading to false here after success
+        setIsLoading(false); 
       };
       reader.onerror = () => {
         throw new Error("Error reading file.");
@@ -72,9 +72,8 @@ export function ContractRiskScannerFeature() {
         description: errorMessage,
         variant: "destructive",
       });
-      setIsLoading(false); // Also set loading to false on error
+      setIsLoading(false); 
     } 
-    // Removed finally block for setIsLoading as it's handled in onload/onerror/catch
   };
 
   const getRiskScoreColor = (score: number) => {
@@ -92,7 +91,7 @@ export function ContractRiskScannerFeature() {
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="bg-muted/30"> {/* Changed background for slight differentiation */}
+      <CardHeader className="border-b"> 
         <div className="flex items-center gap-3">
           <FileText className="w-8 h-8 text-primary" />
           <div>
@@ -176,7 +175,7 @@ export function ContractRiskScannerFeature() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t p-6 bg-muted/30">
+      <CardFooter className="border-t p-6 bg-muted/50">
         <Button onClick={handleSubmit} disabled={isLoading || !file} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
           {isLoading ? (
             <>

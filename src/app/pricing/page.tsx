@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, ShieldAlert, Star, Brain } from 'lucide-react'; // Added Brain
+import { CheckCircle, ShieldAlert, Star, Brain } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Pricing Plans',
@@ -48,7 +48,7 @@ const pricingPlans = [
       'Priority Email Support',
     ],
     cta: 'Choose Pro Plan',
-    href: '/signup?plan=pro', // Placeholder link
+    href: '/signup?plan=pro', 
     popular: true,
   },
   {
@@ -70,7 +70,7 @@ const pricingPlans = [
       'Volume Discounts',
     ],
     cta: 'Contact Sales',
-    href: '/contact-sales', // Placeholder link
+    href: '/contact-sales', 
     popular: false,
   },
 ];
@@ -92,18 +92,18 @@ export default function PricingPage() {
           {pricingPlans.map((plan, index) => (
             <Card 
               key={index} 
-              className={`shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-2 ring-accent/50' : ''}`}
+              className={`shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-2 ring-accent/30' : 'border-border'}`}
             >
-              <CardHeader className="text-center items-center pt-8">
+              <CardHeader className="text-center items-center pt-8 border-b">
                 {plan.icon}
                 <CardTitle className="text-3xl font-headline">{plan.title}</CardTitle>
                 <div className="my-4">
                   <span className="text-4xl font-bold text-primary">{plan.price}</span>
                   {plan.period && <span className="text-muted-foreground">{plan.period}</span>}
                 </div>
-                <CardDescription className="text-sm h-12">{plan.description}</CardDescription>
+                <CardDescription className="text-sm h-12 px-2">{plan.description}</CardDescription>
               </CardHeader>
-              <CardContent className="flex-grow pt-2">
+              <CardContent className="flex-grow pt-6">
                 <ul className="space-y-3 text-sm">
                   {plan.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center">
@@ -113,8 +113,8 @@ export default function PricingPage() {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="pt-6 pb-8">
-                <Button asChild className={`w-full text-base py-3 ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : ''}`}>
+              <CardFooter className="pt-6 pb-8 border-t bg-muted/50">
+                <Button asChild className={`w-full text-base py-3 ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
                   <Link href={plan.href}>{plan.cta}</Link>
                 </Button>
               </CardFooter>
@@ -129,4 +129,3 @@ export default function PricingPage() {
     </>
   );
 }
-

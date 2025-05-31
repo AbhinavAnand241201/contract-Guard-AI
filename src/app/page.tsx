@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, MessageSquareText, ShieldPlus, ArrowRight, Zap, Brain } from 'lucide-react'; // Added Brain
+import { FileText, MessageSquareText, ShieldPlus, ArrowRight, Zap, Brain } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'ContractGuard AI - Secure Your Agreements with AI',
@@ -38,7 +38,7 @@ export default function LandingPage() {
       aiHint: 'shield protection',
     },
     {
-      icon: <Brain className="w-10 h-10 text-primary mb-4" />, // New Feature
+      icon: <Brain className="w-10 h-10 text-primary mb-4" />,
       title: 'AI Negotiation Simulator',
       description: 'Practice high-stakes contract negotiations risk-free. Simulate conversations against AI counterparties and get feedback to improve your skills.',
       imgSrc: 'https://placehold.co/600x400.png',
@@ -61,8 +61,8 @@ export default function LandingPage() {
               ContractGuard AI is your smart co-pilot for understanding, analyzing, securing your agreements, and honing your negotiation skills.
               Turn complex legal documents into clear, actionable insights.
             </p>
-            <div className="flex justify-center gap-4">
-              <Button asChild size="lg" className="text-lg py-7 px-10">
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button asChild size="lg" className="text-lg py-7 px-10 bg-accent text-accent-foreground hover:bg-accent/90">
                 <Link href="/dashboard">Get Started Free</Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="text-lg py-7 px-10 border-primary text-primary hover:bg-primary/5">
@@ -81,10 +81,10 @@ export default function LandingPage() {
             <p className="text-lg text-muted-foreground text-center mb-12 md:mb-16 max-w-2xl mx-auto">
               Our suite of AI tools is designed to demystify legal documents, empower you in negotiations, and help you practice critical conversations.
             </p>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8"> {/* Adjusted grid for 4 features */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
               {features.map((feature, index) => (
                 <Card key={index} className="shadow-xl hover:shadow-2xl transition-shadow duration-300 rounded-xl overflow-hidden flex flex-col">
-                  <CardHeader className="items-center text-center bg-muted/30 pt-6 pb-4">
+                  <CardHeader className="items-center text-center pt-6 pb-4 border-b">
                     {feature.icon}
                     <CardTitle className="text-xl font-headline">{feature.title}</CardTitle>
                   </CardHeader>
@@ -94,7 +94,7 @@ export default function LandingPage() {
                       alt={feature.imgAlt} 
                       width={600} 
                       height={400} 
-                      className="rounded-md mb-4 aspect-[4/3] object-cover" // Adjusted aspect ratio slightly
+                      className="rounded-md mb-4 aspect-[4/3] object-cover"
                       data-ai-hint={feature.aiHint} 
                     />
                     <p className="text-muted-foreground text-sm leading-relaxed">{feature.description}</p>
@@ -118,7 +118,7 @@ export default function LandingPage() {
             <h2 className="text-3xl md:text-4xl font-bold font-headline text-center mb-12 text-foreground">
               Simple Steps to Contract Clarity & Negotiation Prowess
             </h2>
-            <div className="grid md:grid-cols-4 gap-8 text-center"> {/* Adjusted for 4 steps */}
+            <div className="grid md:grid-cols-4 gap-8 text-center">
               <div className="p-6">
                 <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-4 shadow-md">1</div>
                 <h3 className="text-xl font-semibold mb-2">Upload or Paste</h3>

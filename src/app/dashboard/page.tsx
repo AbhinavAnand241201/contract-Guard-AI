@@ -1,18 +1,14 @@
 
 "use client"; 
 
-// import type { Metadata } from 'next'; // Metadata is typically handled in layout or server components
 import { ContractRiskScannerFeature } from '@/components/contract-risk-scanner-feature';
 import { BasicClauseDecoderFeature } from '@/components/basic-clause-decoder-feature';
 import { OneClickProtectionFeature } from '@/components/one-click-protection-feature';
-import { NegotiationSimulatorFeature } from '@/components/negotiation-simulator-feature'; // New Import
+import { NegotiationSimulatorFeature } from '@/components/negotiation-simulator-feature'; 
 import { ExportReportButton } from '@/components/export-report-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { FileText, MessageSquareText, ShieldPlus, DownloadCloud, Brain } from 'lucide-react'; // Added Brain icon
-
-// For client components, metadata is usually handled by nearest server component parent or layout.
-// If you need dynamic titles on client components, you'd use `document.title` in useEffect or a library.
+import { FileText, MessageSquareText, ShieldPlus, DownloadCloud, Brain } from 'lucide-react';
 
 
 export default function DashboardPage() {
@@ -56,7 +52,7 @@ export default function DashboardPage() {
           </TabsContent>
           <TabsContent value="export-reports">
              <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-              <CardHeader className="bg-muted/50">
+              <CardHeader className="border-b">
                   <div className="flex items-center gap-3">
                   <DownloadCloud className="w-8 h-8 text-primary" />
                   <div>

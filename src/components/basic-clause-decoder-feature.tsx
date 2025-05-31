@@ -41,7 +41,7 @@ export function BasicClauseDecoderFeature() {
         title: "Clause Decoded",
         description: "Explanation generated successfully.",
         variant: "default",
-        className: "bg-primary text-primary-foreground" // Using primary for success toast
+        className: "bg-primary text-primary-foreground"
       });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
@@ -58,7 +58,7 @@ export function BasicClauseDecoderFeature() {
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="bg-muted/30"> {/* Changed background */}
+      <CardHeader className="border-b"> 
         <div className="flex items-center gap-3">
           <MessageSquareText className="w-8 h-8 text-primary" />
           <div>
@@ -75,7 +75,7 @@ export function BasicClauseDecoderFeature() {
             value={clauseText}
             onChange={(e) => setClauseText(e.target.value)}
             placeholder="Paste or type your legal clause here..."
-            rows={6} // Increased rows
+            rows={6} 
             className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background"
           />
         </div>
@@ -91,7 +91,7 @@ export function BasicClauseDecoderFeature() {
         {explanation && (
           <div className="space-y-4 pt-6 border-t mt-6">
             <h3 className="text-xl font-semibold font-headline text-primary">Explanation</h3>
-            <Card className="bg-muted/50 border"> {/* Changed background and added border */}
+            <Card className="bg-muted/50 border"> 
               <CardContent className="p-4">
                 <p className="text-sm whitespace-pre-wrap leading-relaxed">{explanation}</p>
               </CardContent>
@@ -99,7 +99,7 @@ export function BasicClauseDecoderFeature() {
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t p-6 bg-muted/30">
+      <CardFooter className="border-t p-6 bg-muted/50">
         <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
           {isLoading ? (
             <>

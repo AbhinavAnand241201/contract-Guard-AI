@@ -13,7 +13,7 @@ export function ExportReportButton() {
       title: "Feature Coming Soon",
       description: "Exporting reports to PDF will be available in a future update.",
       variant: "default",
-      className: "bg-primary/10 text-primary"
+      className: "bg-accent/10 text-accent-foreground" // Use accent for "coming soon"
     });
   };
 

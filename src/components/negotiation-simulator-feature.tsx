@@ -85,7 +85,7 @@ export function NegotiationSimulatorFeature() {
 
     try {
       const input: NegotiationSimulatorInput = {
-        role: selectedRole as NegotiationSimulatorInput['role'], // Asserting type based on 'roles' array
+        role: selectedRole as NegotiationSimulatorInput['role'], 
         scenario: selectedScenario,
         conversationHistory: updatedHistory,
         userInput: newUserMessage.message,
@@ -96,7 +96,6 @@ export function NegotiationSimulatorFeature() {
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred with the AI.";
       setError(errorMessage);
       toast({ title: "AI Error", description: errorMessage, variant: "destructive" });
-      // Optionally remove user message if AI fails or allow retry
     } finally {
       setIsLoading(false);
     }
@@ -115,7 +114,7 @@ export function NegotiationSimulatorFeature() {
       const result = await negotiationFeedback(input);
       setFeedbackResult(result);
       setSimulationEnded(true);
-      setSimulationStarted(false); // Allow starting a new one
+      setSimulationStarted(false); 
       toast({
         title: "Negotiation Feedback Ready!",
         description: "Check your analysis below.",
@@ -143,7 +142,7 @@ export function NegotiationSimulatorFeature() {
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="bg-muted/30">
+      <CardHeader className="border-b">
         <div className="flex items-center gap-3">
           <Brain className="w-8 h-8 text-primary" />
           <div>
@@ -191,7 +190,7 @@ export function NegotiationSimulatorFeature() {
 
       {simulationStarted && (
         <CardContent className="p-6 space-y-4 flex flex-col max-h-[70vh]">
-          <ScrollArea className="flex-grow pr-4 -mr-4 mb-4 h-64 md:h-96"> {/* Adjusted height */}
+          <ScrollArea className="flex-grow pr-4 -mr-4 mb-4 h-64 md:h-96"> 
             <div className="space-y-4">
               {conversationHistory.map((msg, index) => (
                 <div key={index} className={`flex ${msg.speaker === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -237,7 +236,7 @@ export function NegotiationSimulatorFeature() {
         )}
 
       {(simulationStarted || simulationEnded) && (
-        <CardFooter className="border-t p-4 bg-muted/30 flex justify-between">
+        <CardFooter className="border-t p-4 bg-muted/50 flex justify-between">
           {simulationStarted && (
              <Button onClick={handleEndSimulation} disabled={isFeedbackLoading || isLoading || conversationHistory.length === 0} variant="outline" className="text-base">
                 {isFeedbackLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <ThumbsUp className="mr-2 h-5 w-5" />}
