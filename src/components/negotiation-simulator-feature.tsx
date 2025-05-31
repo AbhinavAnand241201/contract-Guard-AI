@@ -30,14 +30,14 @@ const scenarios = [
   "Client wants to add more work beyond the original project scope (scope creep)."
 ];
 
-const roles = ['Landlord', 'Client', 'Employer'] as const; // Use const assertion for stricter typing
+const roles = ['Landlord', 'Client', 'Employer'] as const;
 
 export function NegotiationSimulatorFeature() {
   const [selectedScenario, setSelectedScenario] = useState<string>('');
   const [selectedRole, setSelectedRole] = useState<typeof roles[number] | ''>('');
   const [conversationHistory, setConversationHistory] = useState<ConversationMessage[]>([]);
   const [currentUserInput, setCurrentUserInput] = useState('');
-  const [isAiResponding, setIsAiResponding] = useState(false); // Renamed from isLoading
+  const [isAiResponding, setIsAiResponding] = useState(false);
   const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [feedbackResult, setFeedbackResult] = useState<NegotiationFeedbackOutput | null>(null);
@@ -83,10 +83,12 @@ export function NegotiationSimulatorFeature() {
   const handleSendMessage = async () => {
     if (!currentUserInput.trim() || isAiResponding) return;
 
-    const newUserMessage: ConversationMessage = { speaker: 'user', message: currentUserInput };
-    const updatedHistory = [...conversationHistory, newUserMessage];
-    setConversationHistory(updatedHistory);
-    const currentInputForCall = currentUserInput; // Capture current input before clearing
+    const userMessageContent = currentUserInput;
+    const newUserMessage: ConversationMessage = { speaker: 'user', message: userMessageContent };
+    
+    const updatedLocalHistory = [...conversationHistory, newUserMessage];
+    setConversationHistory(updatedLocalHistory);
+    
     setCurrentUserInput('');
     setIsAiResponding(true);
     setError(null);
@@ -95,8 +97,11 @@ export function NegotiationSimulatorFeature() {
       const input: NegotiationSimulatorInput = {
         role: selectedRole as typeof roles[number], 
         scenario: selectedScenario,
-        conversationHistory: updatedHistory.map(msg => ({ speaker: msg.speaker, message: msg.message })),
-        userInput: currentInputForCall,
+        conversationHistory: updatedLocalHistory.map(msg => ({ 
+          speaker: msg.speaker, 
+          message: msg.message 
+        })),
+        userInput: userMessageContent,
       };
       const result = await negotiationSimulator(input);
       if (result && result.aiResponse) {
@@ -108,8 +113,6 @@ export function NegotiationSimulatorFeature() {
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred with the AI.";
       setError(errorMessage);
       toast({ title: "AI Error", description: errorMessage, variant: "destructive" });
-      // Optionally, add the user's message back to the input if AI fails
-      // setCurrentUserInput(currentInputForCall); 
     } finally {
       setIsAiResponding(false);
     }
@@ -129,9 +132,12 @@ export function NegotiationSimulatorFeature() {
     setFeedbackResult(null);
     try {
       const input: NegotiationFeedbackInput = {
-        role: selectedRole as string, // Cast to string, schema expects string
+        role: selectedRole as string, 
         scenario: selectedScenario,
-        conversationHistory: conversationHistory.map(msg => ({ speaker: msg.speaker, message: msg.message })),
+        conversationHistory: conversationHistory.map(msg => ({ 
+          speaker: msg.speaker, 
+          message: msg.message 
+        })),
       };
       const result = await negotiationFeedback(input);
       setFeedbackResult(result);
@@ -212,9 +218,9 @@ export function NegotiationSimulatorFeature() {
 
       {simulationStarted && (
         <CardContent className="p-4 sm:p-6 space-y-4 flex flex-col max-h-[calc(100vh-20rem)] md:max-h-[calc(100vh-22rem)]">
-          <ScrollArea className="flex-grow pr-2 sm:pr-4 -mr-2 sm:-mr-4 mb-4 h-64 md:h-96 border rounded-lg bg-muted/30 p-3 sm:p-4"> 
+          <ScrollArea className="flex-grow pr-2 sm:pr-4 -mr-2 sm:-mr-4 mb-4 border rounded-lg bg-muted/30 p-3 sm:p-4"> 
             {conversationHistory.length === 0 && (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
+                <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
                     No messages yet. Start the conversation!
                 </div>
             )}
