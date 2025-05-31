@@ -1,3 +1,4 @@
+
 'use server';
 
 /**
@@ -24,7 +25,8 @@ const ContractRiskScannerOutputSchema = z.object({
   riskReport: z
     .string()
     .describe('A detailed report of potential risks identified in the contract.'),
-  riskScore: z.number().describe('A risk score from 0 to 100, representing the overall risk level.'),
+  riskLevel: z.enum(['Low', 'Medium', 'High']).describe('The overall risk level assessed for the contract (Low, Medium, or High).'),
+  riskLevelReasoning: z.string().describe('Brief reasoning for the assigned risk level.'),
   riskFactors: z
     .array(z.string())
     .describe('A list of specific risk factors identified in the contract.'),
@@ -43,7 +45,13 @@ const contractRiskScannerPrompt = ai.definePrompt({
 
 Contract: {{media url=contractDataUri}}
 
-Provide a detailed risk report, a risk score from 0 to 100, and a list of specific risk factors.`,
+Provide:
+1.  A detailed 'riskReport' summarizing potential risks.
+2.  An overall 'riskLevel' (Low, Medium, or High).
+3.  A brief 'riskLevelReasoning' explaining the basis for the assigned risk level.
+4.  A list of specific 'riskFactors' identified.
+
+Return the analysis in the specified JSON format.`,
 });
 
 const contractRiskScannerFlow = ai.defineFlow(
@@ -57,3 +65,4 @@ const contractRiskScannerFlow = ai.defineFlow(
     return output!;
   }
 );
+

@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Progress } from '@/components/ui/progress';
+// import { Progress } from '@/components/ui/progress'; // Progress bar removed
 import { useToast } from '@/hooks/use-toast';
-import { AlertCircle, CheckCircle, FileText, Loader2, ShieldCheck, UploadCloud } from 'lucide-react';
+import { AlertCircle, CheckCircle, FileText, Loader2, ShieldAlert, UploadCloud, Info } from 'lucide-react'; // Replaced ShieldCheck with ShieldAlert
 import React, { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -77,35 +77,30 @@ export function ContractRiskScannerFeature() {
     } 
   };
 
-  const getRiskScoreColorClass = (score: number) => {
-    if (score > 70) return 'bg-destructive'; 
-    if (score > 40) return 'bg-yellow-500'; 
-    return 'bg-green-500'; 
+  const getRiskLevelColorClass = (level: 'Low' | 'Medium' | 'High' | undefined) => {
+    if (level === 'High') return 'text-destructive font-bold'; 
+    if (level === 'Medium') return 'text-yellow-600 font-bold'; 
+    if (level === 'Low') return 'text-green-600 font-bold';
+    return 'text-foreground';
   };
   
-  const getRiskLevelText = (score: number) => {
-    if (score > 70) return 'High Risk';
-    if (score > 40) return 'Medium Risk';
-    return 'Low Risk';
-  };
-
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="border-b"> 
+      <CardHeader className="border-b p-4 sm:p-6"> 
         <div className="flex items-center gap-3">
-          <FileText className="w-8 h-8 text-primary" />
+          <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
           <div>
-            <CardTitle className="text-2xl font-headline">Contract Risk Scanner</CardTitle>
-            <CardDescription>Upload your contract to identify potential risks and get an AI-powered analysis.</CardDescription>
+            <CardTitle className="text-xl sm:text-2xl font-headline">Contract Risk Scanner</CardTitle>
+            <CardDescription className="text-sm">Upload your contract to identify potential risks and get an AI-powered analysis.</CardDescription>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 space-y-6">
+      <CardContent className="p-4 sm:p-6 space-y-6">
         <div className="space-y-2">
           <Label htmlFor="contract-file" className="text-base font-medium">Upload Contract Document</Label>
           <div className="flex flex-col sm:flex-row items-center gap-3 p-4 border-2 border-dashed rounded-lg hover:border-primary transition-colors bg-background">
-            <UploadCloud className="w-10 h-10 text-muted-foreground sm:mb-0 mb-2" />
+            <UploadCloud className="w-10 h-10 text-muted-foreground sm:mb-0 mb-2 shrink-0" />
             <Input
               id="contract-file"
               type="file"
@@ -129,58 +124,69 @@ export function ContractRiskScannerFeature() {
           <div className="space-y-6 pt-6 border-t mt-6">
             <h3 className="text-xl font-semibold font-headline text-primary mb-2">Analysis Results</h3>
             
-            <Card className="bg-card border">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <ShieldCheck className="w-6 h-6 text-primary" />
-                  Overall Risk Score: {analysisResult.riskScore}/100
+            <Card className="bg-card border rounded-lg">
+              <CardHeader className="pb-3 pt-4 px-4 sm:px-5">
+                <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
+                  <ShieldAlert className="w-6 h-6 text-primary shrink-0" />
+                  Overall Risk Level
                 </CardTitle>
-                <CardDescription className={`font-semibold text-base ${analysisResult.riskScore > 70 ? 'text-destructive' : analysisResult.riskScore > 40 ? 'text-yellow-600' : 'text-green-600'}`}>
-                  {getRiskLevelText(analysisResult.riskScore)}
-                </CardDescription>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
-                <Progress value={analysisResult.riskScore} className={`h-3 rounded-full [&>div]:${getRiskScoreColorClass(analysisResult.riskScore)}`} />
+              <CardContent className="px-4 sm:px-5 pb-4 space-y-2">
+                <p className={`text-2xl ${getRiskLevelColorClass(analysisResult.riskLevel)}`}>
+                  {analysisResult.riskLevel}
+                </p>
+                {analysisResult.riskLevelReasoning && (
+                  <p className="text-xs sm:text-sm text-muted-foreground italic">
+                    {analysisResult.riskLevelReasoning}
+                  </p>
+                )}
               </CardContent>
             </Card>
 
-            <Card className="bg-card border">
-              <CardHeader>
-                <CardTitle className="text-lg">Risk Report</CardTitle>
+            <Card className="bg-card border rounded-lg">
+              <CardHeader className="pb-3 pt-4 px-4 sm:px-5">
+                <CardTitle className="text-lg sm:text-xl">Risk Report</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
-                <div className="text-sm whitespace-pre-wrap bg-muted/50 p-4 rounded-md max-h-60 overflow-y-auto border">
+              <CardContent className="px-4 sm:px-5 pb-4">
+                <div className="text-sm whitespace-pre-wrap bg-muted/30 p-3 sm:p-4 rounded-md max-h-60 overflow-y-auto border">
                   {analysisResult.riskReport}
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-card border">
-              <CardHeader>
-                <CardTitle className="text-lg">Identified Risk Factors</CardTitle>
+            <Card className="bg-card border rounded-lg">
+              <CardHeader className="pb-3 pt-4 px-4 sm:px-5">
+                <CardTitle className="text-lg sm:text-xl">Identified Risk Factors</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
+              <CardContent className="px-4 sm:px-5 pb-4">
                 {analysisResult.riskFactors.length > 0 ? (
                   <ul className="space-y-3">
                     {analysisResult.riskFactors.map((factor, index) => (
-                      <li key={index} className="flex items-start gap-3 p-3 bg-muted/50 rounded-md border">
+                      <li key={index} className="flex items-start gap-3 p-3 bg-muted/30 rounded-md border">
                         <AlertCircle className="w-5 h-5 text-destructive mt-0.5 shrink-0" /> 
                         <span className="text-sm">{factor}</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="flex items-center gap-2 text-muted-foreground p-3 bg-muted/50 rounded-md border">
-                    <CheckCircle className="w-5 h-5 text-green-500" />
+                  <div className="flex items-center gap-2 text-muted-foreground p-3 bg-muted/30 rounded-md border">
+                    <CheckCircle className="w-5 h-5 text-green-500 shrink-0" />
                     <p className="text-sm">No specific risk factors highlighted by the AI in this summary.</p>
                   </div>
                 )}
               </CardContent>
             </Card>
+             <Alert variant="default" className="mt-6 bg-accent/10 border-accent text-accent-foreground">
+                <Info className="h-5 w-5 text-accent" />
+                <AlertTitle className="font-semibold text-accent">Important Disclaimer</AlertTitle>
+                <AlertDescription className="text-xs sm:text-sm">
+                    The risk analysis provided is AI-generated and for informational purposes only. It is not a substitute for professional legal advice. Always consult with a qualified legal professional.
+                </AlertDescription>
+            </Alert>
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t p-6 bg-muted/50">
+      <CardFooter className="border-t p-4 sm:p-6 bg-muted/50">
         <Button onClick={handleSubmit} disabled={isLoading || !file} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
           {isLoading ? (
             <>

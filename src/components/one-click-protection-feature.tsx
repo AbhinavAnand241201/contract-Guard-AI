@@ -1,119 +1,130 @@
-
-"use client";
-
-import type { GenerateCounterClauseInput, GenerateCounterClauseOutput } from '@/ai/flows/one-click-protection';
-import { generateCounterClause } from '@/ai/flows/one-click-protection';
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
-import { AlertCircle, ShieldPlus, Loader2, Wand2 } from 'lucide-react';
-import React, { useState } from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { CheckCircle, ShieldAlert, Star, ShieldCheck } from 'lucide-react'; // Updated Brain to ShieldCheck for Enterprise
 
-export function OneClickProtectionFeature() {
-  const [contractText, setContractText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [counterClause, setCounterClause] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const { toast } = useToast();
+export const metadata: Metadata = {
+  title: 'Pricing Plans',
+  description: 'Choose the perfect ContractGuard AI plan to fit your needs. From free trials to enterprise solutions, get started with AI-powered contract analysis and negotiation simulation today.',
+};
 
-  const handleSubmit = async () => {
-    if (!contractText.trim()) {
-      toast({
-        title: "No contract text provided",
-        description: "Please enter the contract text to generate protection.",
-        variant: "destructive",
-      });
-      return;
-    }
+const pricingPlans = [
+  {
+    icon: <ShieldAlert className="w-10 h-10 text-primary mb-4" />,
+    title: 'Starter',
+    price: 'Free',
+    period: '',
+    description: 'Perfect for individuals trying out our core features & basic simulation.',
+    features: [
+      '1 Contract Scan / month (Risk Level assessment)',
+      '3 Clause Decodes / month',
+      'Basic Clause Guardian Suggestions',
+      '1 AI Negotiation Simulation / week (5 scenarios)',
+      'Basic AI Opponent Logic',
+      'Basic Negotiation Feedback Score',
+      'Basic Email Support',
+    ],
+    cta: 'Get Started Free',
+    href: '/dashboard',
+    popular: false,
+  },
+  {
+    icon: <Star className="w-10 h-10 text-accent mb-4" />,
+    title: 'Pro',
+    price: '$29',
+    period: '/ month',
+    description: 'For professionals and small teams needing more power and advanced simulation.',
+    features: [
+      '25 Contract Scans / month (Risk Level assessment)',
+      '100 Clause Decodes / month',
+      'Full Clause Guardian Access',
+      'Unlimited AI Negotiation Simulations',
+      'Industry-Specific Scenarios (Coming Soon)',
+      'Emotion-Aware AI Opponent (Coming Soon)',
+      'Detailed Negotiation Feedback & Suggestions',
+      'Export Reports (when available)',
+      'Priority Email Support',
+    ],
+    cta: 'Choose Pro Plan',
+    href: '/signup?plan=pro', 
+    popular: true,
+  },
+  {
+    icon: <ShieldCheck className="w-10 h-10 text-primary mb-4" />, // Updated icon
+    title: 'Enterprise',
+    price: 'Custom',
+    period: '',
+    description: 'Tailored solutions for large organizations and high volume needs, including advanced simulation features.',
+    features: [
+      'Unlimited Contract Scans (Risk Level assessment)',
+      'Unlimited Clause Decodes',
+      'Unlimited Clause Guardian Access',
+      'Unlimited AI Negotiation Simulations + Custom Roles',
+      'Custom Scenario Library Creation',
+      'Advanced AI Opponent Customization',
+      'Team Performance Tracking for Simulations',
+      'Dedicated Account Manager',
+      'Custom Integrations',
+      'Volume Discounts',
+    ],
+    cta: 'Contact Sales',
+    href: '/contact-sales', 
+    popular: false,
+  },
+];
 
-    setIsLoading(true);
-    setError(null);
-    setCounterClause(null);
-
-    try {
-      const input: GenerateCounterClauseInput = { contractText };
-      const result: GenerateCounterClauseOutput = await generateCounterClause(input);
-      setCounterClause(result.counterClause);
-      toast({
-        title: "Protection Generated",
-        description: "Counter-clause created successfully.",
-        variant: "default",
-        className: "bg-primary text-primary-foreground"
-      });
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-      setError(errorMessage);
-      toast({
-        title: "Generation Failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+export default function PricingPage() {
   return (
-    <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="border-b"> 
-        <div className="flex items-center gap-3">
-          <ShieldPlus className="w-8 h-8 text-primary" />
-          <div>
-            <CardTitle className="text-2xl font-headline">1-Click Protection</CardTitle>
-            <CardDescription>Generate a protective counter-clause for your contract with a single click.</CardDescription>
-          </div>
-        </div>
-      </CardHeader>
-      <CardContent className="p-6 space-y-6">
-        <div className="space-y-2">
-          <Label htmlFor="contract-text" className="text-base font-medium">Enter Contract Text</Label>
-          <Textarea
-            id="contract-text"
-            value={contractText}
-            onChange={(e) => setContractText(e.target.value)}
-            placeholder="Paste the full text of your contract here..."
-            rows={10} 
-            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border"
-          />
+    <>
+      <main className="flex-grow container mx-auto px-4 py-12 md:py-20">
+        <div className="text-center mb-12 md:mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold font-headline mb-4 text-foreground">
+            Find the Right Plan for You
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+            Unlock the full potential of AI contract analysis and negotiation simulation with a plan that matches your needs.
+          </p>
         </div>
 
-        {error && (
-          <Alert variant="destructive" className="mt-4">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{error}</AlertDescription>
-          </Alert>
-        )}
-
-        {counterClause && (
-          <div className="space-y-4 pt-6 border-t mt-6">
-            <h3 className="text-xl font-semibold font-headline text-primary">Generated Counter-Clause</h3>
-            <Card className="bg-muted/50 border"> 
-              <CardContent className="p-4">
-                <p className="text-sm whitespace-pre-wrap leading-relaxed">{counterClause}</p>
+        <div className="grid md:grid-cols-3 gap-8 items-stretch">
+          {pricingPlans.map((plan, index) => (
+            <Card 
+              key={index} 
+              className={`shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-2 ring-accent/30' : 'border-border'}`}
+            >
+              <CardHeader className="text-center items-center pt-8 border-b">
+                {plan.icon}
+                <CardTitle className="text-3xl font-headline">{plan.title}</CardTitle>
+                <div className="my-4">
+                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
+                  {plan.period && <span className="text-muted-foreground">{plan.period}</span>}
+                </div>
+                <CardDescription className="text-sm h-12 px-2">{plan.description}</CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow pt-6">
+                <ul className="space-y-3 text-sm">
+                  {plan.features.map((feature, fIndex) => (
+                    <li key={fIndex} className="flex items-center">
+                      <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
               </CardContent>
+              <CardFooter className="pt-6 pb-8 border-t bg-muted/50">
+                <Button asChild className={`w-full text-base py-3 ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
+                  <Link href={plan.href}>{plan.cta}</Link>
+                </Button>
+              </CardFooter>
             </Card>
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="border-t p-6 bg-muted/50">
-        <Button onClick={handleSubmit} disabled={isLoading || !contractText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              Generating...
-            </>
-          ) : (
-            <>
-              <Wand2 className="mr-2 h-5 w-5" />
-              Generate Protection
-            </>
-          )}
-        </Button>
-      </CardFooter>
-    </Card>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center text-muted-foreground text-sm">
+          <p>All plans come with robust security and privacy features. Need something different? <Link href="/contact-sales" className="text-primary hover:underline">Contact us</Link> for custom solutions.</p>
+        </div>
+      </main>
+    </>
   );
 }

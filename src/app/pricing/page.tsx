@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, ShieldAlert, Star, Brain } from 'lucide-react';
+import { CheckCircle, ShieldAlert, Star, ShieldCheck } from 'lucide-react'; // Updated Brain to ShieldCheck for Enterprise
 
 export const metadata: Metadata = {
   title: 'Pricing Plans',
@@ -18,9 +18,9 @@ const pricingPlans = [
     period: '',
     description: 'Perfect for individuals trying out our core features & basic simulation.',
     features: [
-      '1 Contract Scan / month',
+      '1 Contract Scan / month (Risk Level assessment)',
       '3 Clause Decodes / month',
-      'Limited 1-Click Protection',
+      'Basic Clause Guardian Suggestions',
       '1 AI Negotiation Simulation / week (5 scenarios)',
       'Basic AI Opponent Logic',
       'Basic Negotiation Feedback Score',
@@ -37,9 +37,9 @@ const pricingPlans = [
     period: '/ month',
     description: 'For professionals and small teams needing more power and advanced simulation.',
     features: [
-      '25 Contract Scans / month',
+      '25 Contract Scans / month (Risk Level assessment)',
       '100 Clause Decodes / month',
-      'Full 1-Click Protection Access',
+      'Full Clause Guardian Access',
       'Unlimited AI Negotiation Simulations',
       'Industry-Specific Scenarios (Coming Soon)',
       'Emotion-Aware AI Opponent (Coming Soon)',
@@ -52,15 +52,15 @@ const pricingPlans = [
     popular: true,
   },
   {
-    icon: <CheckCircle className="w-10 h-10 text-primary mb-4" />,
+    icon: <ShieldCheck className="w-10 h-10 text-primary mb-4" />, // Updated icon
     title: 'Enterprise',
     price: 'Custom',
     period: '',
     description: 'Tailored solutions for large organizations and high volume needs, including advanced simulation features.',
     features: [
-      'Unlimited Contract Scans',
+      'Unlimited Contract Scans (Risk Level assessment)',
       'Unlimited Clause Decodes',
-      'Unlimited 1-Click Protection',
+      'Unlimited Clause Guardian Access',
       'Unlimited AI Negotiation Simulations + Custom Roles',
       'Custom Scenario Library Creation',
       'Advanced AI Opponent Customization',

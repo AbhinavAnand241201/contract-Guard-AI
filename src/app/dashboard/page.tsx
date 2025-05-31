@@ -3,12 +3,12 @@
 
 import { ContractRiskScannerFeature } from '@/components/contract-risk-scanner-feature';
 import { BasicClauseDecoderFeature } from '@/components/basic-clause-decoder-feature';
-import { OneClickProtectionFeature } from '@/components/one-click-protection-feature';
+import { ClauseGuardianFeature } from '@/components/clause-guardian-feature'; // Updated
 import { NegotiationSimulatorFeature } from '@/components/negotiation-simulator-feature'; 
 import { ExportReportButton } from '@/components/export-report-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { FileText, MessageSquareText, ShieldPlus, DownloadCloud, Brain } from 'lucide-react';
+import { FileText, MessageSquareText, ShieldAlert, DownloadCloud, Brain } from 'lucide-react'; // Updated ShieldPlus to ShieldAlert
 
 
 export default function DashboardPage() {
@@ -36,11 +36,11 @@ export default function DashboardPage() {
               <span>Clause Decoder</span>
             </TabsTrigger>
             <TabsTrigger 
-              value="one-click-protection" 
+              value="clause-guardian" 
               className="flex items-center justify-center gap-2 py-2.5 px-3 text-xs sm:text-sm font-medium data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-lg rounded-md transition-all hover:bg-primary/5"
             >
-              <ShieldPlus className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
-              <span>1-Click Protection</span>
+              <ShieldAlert className="h-4 w-4 sm:h-5 sm:w-5 shrink-0" />
+              <span>Clause Guardian</span>
             </TabsTrigger>
             <TabsTrigger 
               value="negotiation-simulator" 
@@ -64,8 +64,8 @@ export default function DashboardPage() {
           <TabsContent value="clause-decoder">
             <BasicClauseDecoderFeature />
           </TabsContent>
-          <TabsContent value="one-click-protection">
-            <OneClickProtectionFeature />
+          <TabsContent value="clause-guardian">
+            <ClauseGuardianFeature />
           </TabsContent>
           <TabsContent value="negotiation-simulator">
             <NegotiationSimulatorFeature />
@@ -91,3 +91,4 @@ export default function DashboardPage() {
     </>
   );
 }
+

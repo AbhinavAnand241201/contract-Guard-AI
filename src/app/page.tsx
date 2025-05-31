@@ -4,11 +4,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, MessageSquareText, ShieldPlus, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users } from 'lucide-react';
+import { FileText, MessageSquareText, ShieldAlert, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users } from 'lucide-react'; // Updated ShieldPlus to ShieldAlert
 
 export const metadata: Metadata = {
   title: 'ContractGuard AI - Secure Your Agreements with AI',
-  description: 'Effortlessly analyze contracts, decode complex clauses, generate protective counter-clauses, and practice negotiation with ContractGuard AI. Your smart co-pilot for contract management.',
+  description: 'Effortlessly analyze contracts, decode complex clauses, get clause improvement suggestions, and practice negotiation with ContractGuard AI. Your smart co-pilot for contract management.',
 };
 
 export default function LandingPage() {
@@ -16,7 +16,7 @@ export default function LandingPage() {
     {
       icon: <FileText className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Contract Risk Scanner',
-      description: 'Upload your contracts and our AI will scan them for potential risks, high-risk clauses, and ambiguities. Get a clear risk score and detailed report.',
+      description: 'Upload your contracts and our AI will scan them for potential risks, assigning a clear risk level (Low, Medium, High) with detailed reports and factors.',
       imgSrc: 'https://placehold.co/600x400.png',
       imgAlt: 'Contract Risk Scanner illustration',
       aiHint: 'contract document',
@@ -30,11 +30,11 @@ export default function LandingPage() {
       aiHint: 'legal text',
     },
     {
-      icon: <ShieldPlus className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
-      title: '1-Click Protection',
-      description: 'Feeling vulnerable? Provide your contract text, and our AI will generate a protective counter-clause to safeguard your interests effectively.',
+      icon: <ShieldAlert className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
+      title: 'Clause Guardian AI',
+      description: 'Provide your contract text, and our AI will identify potentially unfavorable clauses and offer suggestions for improvement to safeguard your interests.',
       imgSrc: 'https://placehold.co/600x400.png',
-      imgAlt: '1-Click Protection illustration',
+      imgAlt: 'Clause Guardian AI illustration',
       aiHint: 'shield protection',
     },
     {
@@ -56,12 +56,12 @@ export default function LandingPage() {
     {
       icon: <Zap className="w-10 h-10 text-accent" />,
       title: 'AI Analysis & Interaction',
-      description: 'Our intelligent engine processes the text in seconds for risks, explanations, or engages in simulated negotiation.',
+      description: 'Our intelligent engine processes the text in seconds for risks, explanations, clause suggestions, or engages in simulated negotiation.',
     },
     {
       icon: <CheckCircle className="w-10 h-10 text-accent" />,
-      title: 'Get Insights & Protection',
-      description: 'Receive clear reports, plain-English explanations, protective clauses, or detailed negotiation feedback.',
+      title: 'Get Insights & Suggestions',
+      description: 'Receive clear risk reports, plain-English explanations, clause improvement ideas, or detailed negotiation feedback.',
     },
      {
       icon: <Users className="w-10 h-10 text-accent" />,
@@ -212,5 +212,3 @@ export default function LandingPage() {
     </>
   );
 }
-
-    
