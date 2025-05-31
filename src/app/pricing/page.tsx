@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, ShieldAlert, Star, ShieldCheck } from 'lucide-react'; // Updated Brain to ShieldCheck for Enterprise
+import { CheckCircle, ShieldAlert, Star, ShieldCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Pricing Plans',
@@ -20,7 +20,7 @@ const pricingPlans = [
     features: [
       '1 Contract Scan / month (Risk Level assessment)',
       '3 Clause Decodes / month',
-      'Basic Clause Guardian Suggestions',
+      'Basic Clause Guardian AI Suggestions',
       '1 AI Negotiation Simulation / week (5 scenarios)',
       'Basic AI Opponent Logic',
       'Basic Negotiation Feedback Score',
@@ -39,7 +39,7 @@ const pricingPlans = [
     features: [
       '25 Contract Scans / month (Risk Level assessment)',
       '100 Clause Decodes / month',
-      'Full Clause Guardian Access',
+      'Full Clause Guardian AI Access',
       'Unlimited AI Negotiation Simulations',
       'Industry-Specific Scenarios (Coming Soon)',
       'Emotion-Aware AI Opponent (Coming Soon)',
@@ -52,7 +52,7 @@ const pricingPlans = [
     popular: true,
   },
   {
-    icon: <ShieldCheck className="w-10 h-10 text-primary mb-4" />, // Updated icon
+    icon: <ShieldCheck className="w-10 h-10 text-primary mb-4" />,
     title: 'Enterprise',
     price: 'Custom',
     period: '',
@@ -60,7 +60,7 @@ const pricingPlans = [
     features: [
       'Unlimited Contract Scans (Risk Level assessment)',
       'Unlimited Clause Decodes',
-      'Unlimited Clause Guardian Access',
+      'Unlimited Clause Guardian AI Access',
       'Unlimited AI Negotiation Simulations + Custom Roles',
       'Custom Scenario Library Creation',
       'Advanced AI Opponent Customization',

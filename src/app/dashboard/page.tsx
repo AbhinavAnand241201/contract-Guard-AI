@@ -3,12 +3,12 @@
 
 import { ContractRiskScannerFeature } from '@/components/contract-risk-scanner-feature';
 import { BasicClauseDecoderFeature } from '@/components/basic-clause-decoder-feature';
-import { ClauseGuardianFeature } from '@/components/clause-guardian-feature'; // Updated
+import { ClauseGuardianFeature } from '@/components/clause-guardian-feature';
 import { NegotiationSimulatorFeature } from '@/components/negotiation-simulator-feature'; 
 import { ExportReportButton } from '@/components/export-report-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { FileText, MessageSquareText, ShieldAlert, DownloadCloud, Brain } from 'lucide-react'; // Updated ShieldPlus to ShieldAlert
+import { FileText, MessageSquareText, ShieldAlert, DownloadCloud, Brain } from 'lucide-react';
 
 
 export default function DashboardPage() {
@@ -91,4 +91,3 @@ export default function DashboardPage() {
     </>
   );
 }
-

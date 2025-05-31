@@ -8,7 +8,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
-import { AlertCircle, Loader2, MessageSquareText, Sparkles } from 'lucide-react';
+import { AlertCircle, Loader2, MessageSquareText, Sparkles, Info } from 'lucide-react';
 import React, { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -58,16 +58,16 @@ export function BasicClauseDecoderFeature() {
 
   return (
     <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="border-b"> 
+      <CardHeader className="border-b p-4 sm:p-6"> 
         <div className="flex items-center gap-3">
-          <MessageSquareText className="w-8 h-8 text-primary" />
+          <MessageSquareText className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
           <div>
-            <CardTitle className="text-2xl font-headline">Basic Clause Decoder</CardTitle>
-            <CardDescription>Understand complex legal terms. Enter a clause to get a plain-English explanation.</CardDescription>
+            <CardTitle className="text-xl sm:text-2xl font-headline">Basic Clause Decoder</CardTitle>
+            <CardDescription className="text-sm">Understand complex legal terms. Enter a clause to get a plain-English explanation.</CardDescription>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="p-6 space-y-6">
+      <CardContent className="p-4 sm:p-6 space-y-6">
         <div className="space-y-2">
           <Label htmlFor="clause-text" className="text-base font-medium">Enter Legal Clause</Label>
           <Textarea
@@ -77,11 +77,12 @@ export function BasicClauseDecoderFeature() {
             placeholder="Paste or type your legal clause here..."
             rows={6} 
             className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border"
+            disabled={isLoading}
           />
         </div>
 
         {error && (
-          <Alert variant="destructive" className="mt-4">
+          <Alert variant="destructive" className="mt-4 text-xs sm:text-sm">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -90,16 +91,23 @@ export function BasicClauseDecoderFeature() {
 
         {explanation && (
           <div className="space-y-4 pt-6 border-t mt-6">
-            <h3 className="text-xl font-semibold font-headline text-primary">Explanation</h3>
-            <Card className="bg-muted/50 border"> 
-              <CardContent className="p-4">
+            <h3 className="text-lg sm:text-xl font-semibold font-headline text-primary">Explanation</h3>
+            <Card className="bg-muted/30 border rounded-lg"> 
+              <CardContent className="p-3 sm:p-4">
                 <p className="text-sm whitespace-pre-wrap leading-relaxed">{explanation}</p>
               </CardContent>
             </Card>
+            <Alert variant="default" className="mt-6 bg-accent/10 border-accent text-accent-foreground text-xs sm:text-sm">
+              <Info className="h-5 w-5 text-accent" />
+              <AlertTitle className="font-semibold text-accent">Important Disclaimer</AlertTitle>
+              <AlertDescription>
+                AI-generated explanations are for informational purposes only and do not constitute legal advice. Always consult with a qualified legal professional for advice specific to your situation.
+              </AlertDescription>
+            </Alert>
           </div>
         )}
       </CardContent>
-      <CardFooter className="border-t p-6 bg-muted/50">
+      <CardFooter className="border-t p-4 sm:p-6 bg-muted/50">
         <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
           {isLoading ? (
             <>

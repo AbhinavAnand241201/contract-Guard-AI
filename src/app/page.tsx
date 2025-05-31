@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, MessageSquareText, ShieldAlert, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users } from 'lucide-react'; // Updated ShieldPlus to ShieldAlert
+import { FileText, MessageSquareText, ShieldAlert, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'ContractGuard AI - Secure Your Agreements with AI',
@@ -86,7 +86,7 @@ export default function LandingPage() {
               Turn complex legal documents into clear, actionable insights.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
-              <Button asChild size="lg" className="text-lg py-4 px-8 md:py-7 md:px-10 bg-primary text-primary-foreground hover:bg-primary/90 transform hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl">
+              <Button asChild size="lg" className="text-lg py-4 px-8 md:py-7 md:px-10 bg-accent text-accent-foreground hover:bg-accent/90 transform hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl group">
                 <Link href="/dashboard">Get Started Free <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" /></Link>
               </Button>
               <Button asChild variant="outline" size="lg" className="text-lg py-4 px-8 md:py-7 md:px-10 border-primary text-primary hover:bg-primary/10 hover:text-primary transform hover:scale-105 transition-transform duration-300 shadow-md hover:shadow-lg">
@@ -133,7 +133,7 @@ export default function LandingPage() {
               ))}
             </div>
              <div className="text-center mt-16">
-              <Button asChild size="lg" className="text-lg py-4 px-8 md:py-7 md:px-10 bg-accent hover:bg-accent/90 text-accent-foreground transform hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl">
+              <Button asChild size="lg" className="text-lg py-4 px-8 md:py-7 md:px-10 bg-accent hover:bg-accent/90 text-accent-foreground transform hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-xl group">
                 <Link href="/dashboard">
                   Try ContractGuard AI Now <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
@@ -153,7 +153,7 @@ export default function LandingPage() {
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
               {howItWorksSteps.map((step, index) => (
-                <div key={index} className="p-6 bg-card rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 flex flex-col items-center">
+                <div key={index} className="p-6 bg-card rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1 flex flex-col items-center group">
                   <div className="bg-primary/10 text-primary rounded-full w-16 h-16 flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-md group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
                     {step.icon}
                   </div>
@@ -202,12 +202,11 @@ export default function LandingPage() {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
               Join thousands of users who are saving time, reducing risk, and negotiating smarter with ContractGuard AI.
             </p>
-            <Button asChild size="lg" className="text-xl py-4 px-10 md:py-8 md:px-12 bg-accent text-accent-foreground hover:bg-accent/90 transform hover:scale-105 transition-transform duration-300 shadow-xl hover:shadow-2xl">
+            <Button asChild size="lg" className="text-xl py-4 px-10 md:py-8 md:px-12 bg-accent text-accent-foreground hover:bg-accent/90 transform hover:scale-105 transition-transform duration-300 shadow-xl hover:shadow-2xl group">
               <Link href="/dashboard">Start Your Free Trial Now <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300" /></Link>
             </Button>
           </div>
         </section>
-
       </main>
     </>
   );

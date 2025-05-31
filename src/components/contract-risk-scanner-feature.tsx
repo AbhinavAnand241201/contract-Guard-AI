@@ -7,9 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-// import { Progress } from '@/components/ui/progress'; // Progress bar removed
 import { useToast } from '@/hooks/use-toast';
-import { AlertCircle, CheckCircle, FileText, Loader2, ShieldAlert, UploadCloud, Info } from 'lucide-react'; // Replaced ShieldCheck with ShieldAlert
+import { AlertCircle, CheckCircle, FileText, Loader2, ShieldAlert, UploadCloud, Info } from 'lucide-react';
 import React, { useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
@@ -42,16 +41,17 @@ export function ContractRiskScannerFeature() {
     setError(null);
     setAnalysisResult(null);
 
-    try {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = async (e) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file); // Start reading
+
+    reader.onload = async (e) => { // This is async
+      try {
         const contractDataUri = e.target?.result as string;
         if (!contractDataUri) {
-            throw new Error("Failed to read file.");
+            throw new Error("Failed to read file content.");
         }
         const input: ContractRiskScannerInput = { contractDataUri };
-        const result = await contractRiskScanner(input);
+        const result = await contractRiskScanner(input); // Actual AI call
         setAnalysisResult(result);
         toast({
           title: "Analysis Complete",
@@ -59,22 +59,28 @@ export function ContractRiskScannerFeature() {
           variant: "default",
           className: "bg-primary text-primary-foreground"
         });
-        setIsLoading(false); 
-      };
-      reader.onerror = () => {
-        setIsLoading(false); 
-        throw new Error("Error reading file.");
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "An unknown error occurred during analysis.";
+        setError(errorMessage);
+        toast({
+          title: "Analysis Failed",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false); // Moved setIsLoading(false) here
       }
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
-      setError(errorMessage);
+    };
+
+    reader.onerror = () => {
+      setError("Error reading file. Please try again or select a different file.");
       toast({
-        title: "Analysis Failed",
-        description: errorMessage,
+        title: "File Read Error",
+        description: "Could not read the selected file.",
         variant: "destructive",
       });
-      setIsLoading(false); 
-    } 
+      setIsLoading(false); // Also here for error case
+    };
   };
 
   const getRiskLevelColorClass = (level: 'Low' | 'Medium' | 'High' | undefined) => {
@@ -92,7 +98,7 @@ export function ContractRiskScannerFeature() {
           <FileText className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
           <div>
             <CardTitle className="text-xl sm:text-2xl font-headline">Contract Risk Scanner</CardTitle>
-            <CardDescription className="text-sm">Upload your contract to identify potential risks and get an AI-powered analysis.</CardDescription>
+            <CardDescription className="text-sm">Upload your contract (PDF, DOCX, TXT) to identify potential risks and get an AI-powered analysis.</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -107,13 +113,14 @@ export function ContractRiskScannerFeature() {
               onChange={handleFileChange}
               className="flex-grow file:mr-4 file:py-2 file:px-4 file:rounded-md file:border file:border-input file:bg-primary/10 file:text-sm file:font-semibold file:text-primary hover:file:bg-primary/20 cursor-pointer"
               accept=".pdf,.doc,.docx,.txt"
+              disabled={isLoading}
             />
           </div>
           {file && <p className="text-sm text-muted-foreground mt-2">Selected file: {file.name}</p>}
         </div>
 
         {error && (
-          <Alert variant="destructive" className="mt-4">
+          <Alert variant="destructive" className="mt-4 text-xs sm:text-sm">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -176,11 +183,11 @@ export function ContractRiskScannerFeature() {
                 )}
               </CardContent>
             </Card>
-             <Alert variant="default" className="mt-6 bg-accent/10 border-accent text-accent-foreground">
+            <Alert variant="default" className="mt-6 bg-accent/10 border-accent text-accent-foreground text-xs sm:text-sm">
                 <Info className="h-5 w-5 text-accent" />
                 <AlertTitle className="font-semibold text-accent">Important Disclaimer</AlertTitle>
-                <AlertDescription className="text-xs sm:text-sm">
-                    The risk analysis provided is AI-generated and for informational purposes only. It is not a substitute for professional legal advice. Always consult with a qualified legal professional.
+                <AlertDescription>
+                    The risk analysis provided is AI-generated and for informational purposes only. It is not a substitute for professional legal advice. Always consult with a qualified legal professional for advice specific to your situation.
                 </AlertDescription>
             </Alert>
           </div>
