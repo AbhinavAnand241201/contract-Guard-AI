@@ -1,12 +1,13 @@
+
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { CheckCircle, ShieldAlert, Star } from 'lucide-react';
+import { CheckCircle, ShieldAlert, Star, Brain } from 'lucide-react'; // Added Brain
 
 export const metadata: Metadata = {
   title: 'Pricing Plans',
-  description: 'Choose the perfect ContractGuard AI plan to fit your needs. From free trials to enterprise solutions, get started with AI-powered contract analysis today.',
+  description: 'Choose the perfect ContractGuard AI plan to fit your needs. From free trials to enterprise solutions, get started with AI-powered contract analysis and negotiation simulation today.',
 };
 
 const pricingPlans = [
@@ -15,11 +16,14 @@ const pricingPlans = [
     title: 'Starter',
     price: 'Free',
     period: '',
-    description: 'Perfect for individuals trying out our core features.',
+    description: 'Perfect for individuals trying out our core features & basic simulation.',
     features: [
       '1 Contract Scan / month',
       '3 Clause Decodes / month',
       'Limited 1-Click Protection',
+      '1 AI Negotiation Simulation / week (5 scenarios)',
+      'Basic AI Opponent Logic',
+      'Basic Negotiation Feedback Score',
       'Basic Email Support',
     ],
     cta: 'Get Started Free',
@@ -31,13 +35,17 @@ const pricingPlans = [
     title: 'Pro',
     price: '$29',
     period: '/ month',
-    description: 'For professionals and small teams needing more power.',
+    description: 'For professionals and small teams needing more power and advanced simulation.',
     features: [
       '25 Contract Scans / month',
       '100 Clause Decodes / month',
       'Full 1-Click Protection Access',
-      'Priority Email Support',
+      'Unlimited AI Negotiation Simulations',
+      'Industry-Specific Scenarios (Coming Soon)',
+      'Emotion-Aware AI Opponent (Coming Soon)',
+      'Detailed Negotiation Feedback & Suggestions',
       'Export Reports (when available)',
+      'Priority Email Support',
     ],
     cta: 'Choose Pro Plan',
     href: '/signup?plan=pro', // Placeholder link
@@ -48,11 +56,15 @@ const pricingPlans = [
     title: 'Enterprise',
     price: 'Custom',
     period: '',
-    description: 'Tailored solutions for large organizations and high volume needs.',
+    description: 'Tailored solutions for large organizations and high volume needs, including advanced simulation features.',
     features: [
       'Unlimited Contract Scans',
       'Unlimited Clause Decodes',
       'Unlimited 1-Click Protection',
+      'Unlimited AI Negotiation Simulations + Custom Roles',
+      'Custom Scenario Library Creation',
+      'Advanced AI Opponent Customization',
+      'Team Performance Tracking for Simulations',
       'Dedicated Account Manager',
       'Custom Integrations',
       'Volume Discounts',
@@ -72,7 +84,7 @@ export default function PricingPage() {
             Find the Right Plan for You
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Unlock the full potential of AI contract analysis with a plan that matches your needs.
+            Unlock the full potential of AI contract analysis and negotiation simulation with a plan that matches your needs.
           </p>
         </div>
 
@@ -117,3 +129,4 @@ export default function PricingPage() {
     </>
   );
 }
+
