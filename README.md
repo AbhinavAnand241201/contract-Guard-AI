@@ -1,25 +1,185 @@
 
 # ContractGuard AI - Your AI-Powered Contract Co-Pilot & Negotiation Coach
 
-ContractGuard AI is a Next.js web application designed to empower users in understanding, analyzing, and negotiating contracts with the help of cutting-edge AI. It provides a suite of tools to demystify legal jargon, identify potential risks, generate protective clauses, and practice negotiation skills in a safe, simulated environment.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-13.5.4-000000?logo=nextdotjs)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2.2-3178C6?logo=typescript)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.1-06B6D4?logo=tailwindcss)](https://tailwindcss.com/)
 
-## Table of Contents
+ContractGuard AI is a cutting-edge Next.js web application that leverages advanced AI to transform how individuals and businesses handle contracts. This comprehensive platform provides intelligent tools for contract analysis, risk assessment, legal document understanding, and negotiation simulation, all wrapped in an intuitive, user-friendly interface.
 
-- [Overview](#overview)
-- [Key Features](#key-features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Running the Application](#running-the-application)
-  - [Development Mode](#development-mode)
-  - [Genkit Development](#genkit-development)
-  - [Production Build & Start](#production-build--start)
-- [AI Flows](#ai-flows)
-- [UI & Styling](#ui--styling)
-- [Pages & Routing](#pages--routing)
-- [Future Enhancements](#future-enhancements)
+## 🚀 Key Features
+
+- **AI-Powered Contract Analysis**: Upload and scan contracts for potential risks and issues
+- **Plain-English Explanations**: Decode complex legal jargon into understandable language
+- **Clause Guardian**: Identify and improve potentially unfavorable contract terms
+- **Negotiation Simulator**: Practice contract negotiations with AI-powered scenarios
+- **Responsive Design**: Fully responsive interface that works across all devices
+- **Modern Tech Stack**: Built with Next.js 13+, TypeScript, and Tailwind CSS
+- **AI Integration**: Leverages advanced language models for intelligent contract processing
+- **Secure & Private**: Built with security and data privacy as top priorities
+
+## 🛠️ Technology Stack
+
+### Core Technologies
+- **Frontend Framework**: [Next.js 13+](https://nextjs.org/) (App Router)
+- **Language**: [TypeScript 5.2+](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS 3.4+](https://tailwindcss.com/) with CSS Modules
+- **UI Components**: Custom components built with [Radix UI](https://www.radix-ui.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Form Handling**: [React Hook Form](https://react-hook-form.com/) with [Zod](https://zod.dev/)
+- **State Management**: [TanStack Query](https://tanstack.com/query/latest)
+- **Authentication**: [Firebase Authentication](https://firebase.google.com/docs/auth)
+- **AI Integration**: [Genkit AI](https://github.com/google/generative-ai-js/tree/main/packages/genkit)
+
+### Development Tools
+- **Package Manager**: npm
+- **Code Formatting**: Prettier
+- **Linting**: ESLint
+- **Type Checking**: TypeScript
+- **Version Control**: Git
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js 18.17 or later
+- npm 9.6.7 or later
+- Git
+- Firebase project (for authentication and database)
+- Google Cloud Project (for AI features)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/AbhinavAnand241201/contract-Guard-AI.git
+   cd contract-Guard-AI
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory and add the following variables:
+   ```env
+   # Firebase
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_firebase_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_firebase_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_firebase_storage_bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_firebase_messaging_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_firebase_app_id
+   
+   # Google Cloud (for AI features)
+   GOOGLE_APPLICATION_CREDENTIALS=path/to/your/service-account-key.json
+   ```
+
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:9002](http://localhost:9002) with your browser to see the result.
+
+## 🏗️ Project Structure
+
+```
+contract-Guard-AI/
+├── public/                     # Static files
+│   └── assets/                 # Images and other static assets
+│       ├── avatars/            # User profile pictures
+│       └── features/           # Feature showcase images
+├── src/
+│   ├── ai/                    # AI integration and flows
+│   │   ├── flows/             # Individual AI workflows
+│   │   └── genkit.ts          # Genkit AI configuration
+│   ├── app/                   # Next.js 13+ app directory
+│   │   ├── dashboard/         # Dashboard page
+│   │   ├── pricing/           # Pricing page
+│   │   ├── layout.tsx         # Root layout
+│   │   └── page.tsx           # Home page
+│   ├── components/            # Reusable UI components
+│   │   ├── ui/                # Shadcn/ui components
+│   │   └── *.tsx              # Feature components
+│   └── lib/                   # Utility functions and hooks
+├── .eslintrc.json             # ESLint configuration
+├── .gitignore                 # Git ignore file
+├── next.config.ts             # Next.js configuration
+├── package.json               # Project dependencies
+└── tsconfig.json              # TypeScript configuration
+```
+
+## 🧩 Features in Detail
+
+### 1. AI Contract Risk Scanner
+- Upload documents in various formats (PDF, DOCX, TXT)
+- AI analyzes the contract for potential risks and assigns a risk score
+- Detailed risk report with highlighted sections
+- Actionable insights and recommendations
+
+### 2. Plain-English Clause Decoder
+- Paste any legal clause for instant analysis
+- Get clear, jargon-free explanations
+- Understand the implications of complex terms
+- Save and organize decoded clauses for future reference
+
+### 3. Clause Guardian AI
+- Identify potentially unfavorable terms
+- Get AI-suggested improvements
+- Compare original vs. improved clauses
+- Export enhanced contract versions
+
+### 4. AI Negotiation Simulator
+- Practice contract negotiations in realistic scenarios
+- AI-powered counterparty simulation
+- Receive feedback on your negotiation approach
+- Learn effective negotiation strategies
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+1. Push your code to a GitHub repository
+2. Import the repository to Vercel
+3. Add your environment variables in the Vercel dashboard
+4. Deploy!
+
+```bash
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📞 Contact
+
+Abhinav Anand - [@your_twitter](https://twitter.com/your_twitter)
+
+Project Link: [https://github.com/AbhinavAnand241201/contract-Guard-AI](https://github.com/AbhinavAnand241201/contract-Guard-AI)
+
+## 🙏 Acknowledgments
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [Radix UI](https://www.radix-ui.com/)
+- [Lucide Icons](https://lucide.dev/)
+- [Shadcn/ui](https://ui.shadcn.com/)
 
 ## Overview
 
