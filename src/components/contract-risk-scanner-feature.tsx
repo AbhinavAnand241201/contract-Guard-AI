@@ -42,16 +42,16 @@ export function ContractRiskScannerFeature() {
     setAnalysisResult(null);
 
     const reader = new FileReader();
-    reader.readAsDataURL(file); // Start reading
+    reader.readAsDataURL(file); 
 
-    reader.onload = async (e) => { // This is async
+    reader.onload = async (e) => { 
       try {
         const contractDataUri = e.target?.result as string;
         if (!contractDataUri) {
             throw new Error("Failed to read file content.");
         }
         const input: ContractRiskScannerInput = { contractDataUri };
-        const result = await contractRiskScanner(input); // Actual AI call
+        const result = await contractRiskScanner(input); 
         setAnalysisResult(result);
         toast({
           title: "Analysis Complete",
@@ -68,7 +68,7 @@ export function ContractRiskScannerFeature() {
           variant: "destructive",
         });
       } finally {
-        setIsLoading(false); // Moved setIsLoading(false) here
+        setIsLoading(false); 
       }
     };
 
@@ -79,7 +79,7 @@ export function ContractRiskScannerFeature() {
         description: "Could not read the selected file.",
         variant: "destructive",
       });
-      setIsLoading(false); // Also here for error case
+      setIsLoading(false); 
     };
   };
 
@@ -155,7 +155,7 @@ export function ContractRiskScannerFeature() {
                 <CardTitle className="text-lg sm:text-xl">Risk Report</CardTitle>
               </CardHeader>
               <CardContent className="px-4 sm:px-5 pb-4">
-                <div className="text-sm whitespace-pre-wrap bg-muted/30 p-3 sm:p-4 rounded-md max-h-60 overflow-y-auto border">
+                <div className="text-sm whitespace-pre-wrap bg-muted/30 p-3 sm:p-4 rounded-md max-h-96 overflow-y-auto border">
                   {analysisResult.riskReport}
                 </div>
               </CardContent>

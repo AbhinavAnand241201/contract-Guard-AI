@@ -78,6 +78,9 @@ export function NegotiationSimulatorFeature() {
       description: `You are negotiating: ${selectedScenario} with a ${selectedRole}. Good luck!`,
       className: "bg-primary text-primary-foreground"
     });
+     if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const handleSendMessage = async () => {
@@ -115,6 +118,9 @@ export function NegotiationSimulatorFeature() {
       toast({ title: "AI Error", description: errorMessage, variant: "destructive" });
     } finally {
       setIsAiResponding(false);
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   };
 
@@ -169,7 +175,7 @@ export function NegotiationSimulatorFeature() {
   }
 
   return (
-    <Card className="w-full shadow-lg rounded-xl overflow-hidden">
+    <Card className="w-full shadow-lg rounded-xl overflow-hidden flex flex-col">
       <CardHeader className="border-b p-4 sm:p-6">
         <div className="flex items-center gap-3">
           <Brain className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
@@ -217,7 +223,7 @@ export function NegotiationSimulatorFeature() {
       )}
 
       {simulationStarted && (
-        <CardContent className="p-4 sm:p-6 space-y-4 flex flex-col max-h-[calc(100vh-20rem)] md:max-h-[calc(100vh-22rem)]">
+        <CardContent className="p-4 sm:p-6 space-y-4 flex flex-col flex-grow max-h-[400px] sm:max-h-[550px] md:max-h-[700px]">
           <ScrollArea className="flex-grow pr-2 sm:pr-4 -mr-2 sm:-mr-4 mb-4 border rounded-lg bg-muted/30 p-3 sm:p-4"> 
             {conversationHistory.length === 0 && (
                 <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
@@ -268,7 +274,7 @@ export function NegotiationSimulatorFeature() {
       )}
       
       {(simulationStarted || simulationEnded) && (
-        <CardFooter className="border-t p-4 sm:p-6 bg-muted/50 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <CardFooter className="border-t p-4 sm:p-6 bg-muted/50 flex flex-col sm:flex-row justify-between items-center gap-3 mt-auto">
           {simulationStarted && (
              <Button 
                 onClick={handleEndSimulation} 
