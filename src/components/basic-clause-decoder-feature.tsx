@@ -9,15 +9,29 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { AlertCircle, Loader2, MessageSquareText, Sparkles, Info } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export function BasicClauseDecoderFeature() {
   const [clauseText, setClauseText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string | null>(null);
   const [explanation, setExplanation] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isLoading) {
+      setLoadingText("ContractGuard AI is thinking...");
+      timer = setTimeout(() => {
+        setLoadingText("ContractGuard AI is analysing...");
+      }, 2500); // 2.5 seconds delay
+    } else {
+      setLoadingText(null);
+    }
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   const handleSubmit = async () => {
     if (!clauseText.trim()) {
@@ -80,8 +94,15 @@ export function BasicClauseDecoderFeature() {
             disabled={isLoading}
           />
         </div>
+        
+        {isLoading && loadingText && (
+          <div className="flex items-center justify-center p-4 my-4 text-sm text-primary bg-primary/10 rounded-md border border-primary/30">
+            <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+            <span>{loadingText}</span>
+          </div>
+        )}
 
-        {error && (
+        {error && !isLoading && (
           <Alert variant="destructive" className="mt-4 text-xs sm:text-sm">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
@@ -89,7 +110,7 @@ export function BasicClauseDecoderFeature() {
           </Alert>
         )}
 
-        {explanation && (
+        {explanation && !isLoading && (
           <div className="space-y-4 pt-6 border-t mt-6">
             <h3 className="text-lg sm:text-xl font-semibold font-headline text-primary">Explanation</h3>
             <Card className="bg-muted/30 border rounded-lg"> 
@@ -109,10 +130,10 @@ export function BasicClauseDecoderFeature() {
       </CardContent>
       <CardFooter className="border-t p-4 sm:p-6 bg-muted/50">
         <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
-          {isLoading ? (
+          {isLoading && loadingText ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              Decoding...
+              {loadingText}
             </>
           ) : (
             <>
@@ -125,3 +146,5 @@ export function BasicClauseDecoderFeature() {
     </Card>
   );
 }
+
+    

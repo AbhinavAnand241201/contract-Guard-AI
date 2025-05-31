@@ -39,6 +39,8 @@ export function NegotiationSimulatorFeature() {
   const [currentUserInput, setCurrentUserInput] = useState('');
   const [isAiResponding, setIsAiResponding] = useState(false);
   const [isFeedbackLoading, setIsFeedbackLoading] = useState(false);
+  const [aiThinkingText, setAiThinkingText] = useState<string | null>(null);
+  const [feedbackLoadingText, setFeedbackLoadingText] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [feedbackResult, setFeedbackResult] = useState<NegotiationFeedbackOutput | null>(null);
   const [simulationStarted, setSimulationStarted] = useState(false);
@@ -57,6 +59,33 @@ export function NegotiationSimulatorFeature() {
       inputRef.current.focus();
     }
   }, [simulationStarted, isAiResponding]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isAiResponding) {
+      setAiThinkingText("ContractGuard AI is thinking...");
+      timer = setTimeout(() => {
+        setAiThinkingText("ContractGuard AI is preparing a response...");
+      }, 2500);
+    } else {
+      setAiThinkingText(null);
+    }
+    return () => clearTimeout(timer);
+  }, [isAiResponding]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isFeedbackLoading) {
+      setFeedbackLoadingText("ContractGuard AI is thinking...");
+      timer = setTimeout(() => {
+        setFeedbackLoadingText("ContractGuard AI is analysing your negotiation...");
+      }, 2500);
+    } else {
+      setFeedbackLoadingText(null);
+    }
+    return () => clearTimeout(timer);
+  }, [isFeedbackLoading]);
+
 
   const handleStartSimulation = () => {
     if (!selectedScenario || !selectedRole) {
@@ -89,8 +118,9 @@ export function NegotiationSimulatorFeature() {
     const userMessageContent = currentUserInput;
     const newUserMessage: ConversationMessage = { speaker: 'user', message: userMessageContent };
     
+    // Immediately add user message to history for responsiveness
     const updatedLocalHistory = [...conversationHistory, newUserMessage];
-    setConversationHistory(updatedLocalHistory);
+    setConversationHistory(updatedLocalHistory); 
     
     setCurrentUserInput('');
     setIsAiResponding(true);
@@ -100,6 +130,7 @@ export function NegotiationSimulatorFeature() {
       const input: NegotiationSimulatorInput = {
         role: selectedRole as typeof roles[number], 
         scenario: selectedScenario,
+        // Pass the already updated history to the AI
         conversationHistory: updatedLocalHistory.map(msg => ({ 
           speaker: msg.speaker, 
           message: msg.message 
@@ -108,11 +139,16 @@ export function NegotiationSimulatorFeature() {
       };
       const result = await negotiationSimulator(input);
       if (result && result.aiResponse) {
+        // Add AI response to the history that already includes the user's latest message
         setConversationHistory(prev => [...prev, { speaker: 'ai', message: result.aiResponse }]);
       } else {
+        // If AI fails, remove the user's last message to prevent a stuck state
+        setConversationHistory(prev => prev.slice(0, -1));
         throw new Error("AI did not provide a valid response.");
       }
     } catch (err) {
+      // If there's an error, consider removing the user's optimistic message or provide a retry mechanism
+      setConversationHistory(prev => prev.slice(0, -1)); // Example: Revert user message on AI error
       const errorMessage = err instanceof Error ? err.message : "An unknown error occurred with the AI.";
       setError(errorMessage);
       toast({ title: "AI Error", description: errorMessage, variant: "destructive" });
@@ -191,7 +227,7 @@ export function NegotiationSimulatorFeature() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
               <Label htmlFor="scenario-select" className="text-base font-medium">Select Scenario</Label>
-              <Select value={selectedScenario} onValueChange={setSelectedScenario}>
+              <Select value={selectedScenario} onValueChange={setSelectedScenario} disabled={isAiResponding || isFeedbackLoading}>
                 <SelectTrigger id="scenario-select" className="bg-background border text-sm sm:text-base">
                   <SelectValue placeholder="Choose a negotiation scenario" />
                 </SelectTrigger>
@@ -204,7 +240,7 @@ export function NegotiationSimulatorFeature() {
             </div>
             <div className="space-y-2">
               <Label htmlFor="role-select" className="text-base font-medium">Select AI Counterparty Role</Label>
-              <Select value={selectedRole} onValueChange={(value) => setSelectedRole(value as typeof roles[number])}>
+              <Select value={selectedRole} onValueChange={(value) => setSelectedRole(value as typeof roles[number])} disabled={isAiResponding || isFeedbackLoading}>
                 <SelectTrigger id="role-select" className="bg-background border text-sm sm:text-base">
                   <SelectValue placeholder="Choose AI's role" />
                 </SelectTrigger>
@@ -216,16 +252,16 @@ export function NegotiationSimulatorFeature() {
               </Select>
             </div>
           </div>
-           <Button onClick={handleStartSimulation} disabled={!selectedScenario || !selectedRole} className="w-full text-base py-3 px-6 mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
+           <Button onClick={handleStartSimulation} disabled={!selectedScenario || !selectedRole || isAiResponding || isFeedbackLoading} className="w-full text-base py-3 px-6 mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
             <Zap className="mr-2 h-5 w-5" /> Start Simulation
           </Button>
         </CardContent>
       )}
 
       {simulationStarted && (
-        <CardContent className="p-4 sm:p-6 space-y-4 flex flex-col flex-grow max-h-[400px] sm:max-h-[550px] md:max-h-[700px]">
+         <CardContent className="p-4 sm:p-6 space-y-4 flex flex-col flex-grow max-h-[400px] sm:max-h-[550px] md:max-h-[700px]">
           <ScrollArea className="flex-grow pr-2 sm:pr-4 -mr-2 sm:-mr-4 mb-4 border rounded-lg bg-muted/30 p-3 sm:p-4"> 
-            {conversationHistory.length === 0 && (
+            {conversationHistory.length === 0 && !isAiResponding && (
                 <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
                     No messages yet. Start the conversation!
                 </div>
@@ -239,6 +275,16 @@ export function NegotiationSimulatorFeature() {
                   </div>
                 </div>
               ))}
+              {isAiResponding && aiThinkingText && (
+                <div className="flex items-start">
+                    <div className="max-w-[85%] sm:max-w-[80%] p-2.5 sm:p-3 rounded-lg text-sm shadow-md bg-card text-muted-foreground border rounded-bl-none italic">
+                        <div className="flex items-center">
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin shrink-0" />
+                            <span>{aiThinkingText}</span>
+                        </div>
+                    </div>
+                </div>
+              )}
               <div ref={conversationEndRef} />
             </div>
           </ScrollArea>
@@ -256,14 +302,14 @@ export function NegotiationSimulatorFeature() {
                   handleSendMessage();
                 }
               }}
-              disabled={isAiResponding}
+              disabled={isAiResponding || isFeedbackLoading}
             />
-            <Button onClick={handleSendMessage} disabled={isAiResponding || !currentUserInput.trim()} className="py-2 px-3 sm:px-4 bg-primary hover:bg-primary/90 text-primary-foreground self-stretch text-sm sm:text-base">
+            <Button onClick={handleSendMessage} disabled={isAiResponding || !currentUserInput.trim() || isFeedbackLoading} className="py-2 px-3 sm:px-4 bg-primary hover:bg-primary/90 text-primary-foreground self-stretch text-sm sm:text-base">
               {isAiResponding ? <Loader2 className="h-4 w-4 sm:h-5 sm:w-5 animate-spin" /> : <Send className="h-4 w-4 sm:h-5 sm:w-5" />}
               <span className="ml-1.5 sm:ml-2 hidden sm:inline">Send</span>
             </Button>
           </div>
-           {error && (
+           {error && !isAiResponding && (
               <Alert variant="destructive" className="mt-2 text-xs sm:text-sm">
                 <AlertCircle className="h-4 w-4" />
                 <AlertTitle>Error</AlertTitle>
@@ -282,14 +328,24 @@ export function NegotiationSimulatorFeature() {
                 variant="outline" 
                 className="w-full sm:w-auto text-sm sm:text-base py-2.5 sm:py-3 px-4 sm:px-6"
               >
-                {isFeedbackLoading ? <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" /> : <ThumbsUp className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />}
-                End & Get Feedback
+                {isFeedbackLoading && feedbackLoadingText ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5 animate-spin" />
+                    {feedbackLoadingText}
+                  </>
+                ) : (
+                  <>
+                    <ThumbsUp className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    End & Get Feedback
+                  </>
+                )}
             </Button>
           )}
           <Button 
             onClick={handleNewSimulation} 
             variant="ghost" 
             className="w-full sm:w-auto text-sm sm:text-base py-2.5 sm:py-3 px-4 sm:px-6 text-muted-foreground hover:text-primary"
+            disabled={isAiResponding || isFeedbackLoading}
           >
             <CornerDownLeft className="mr-2 h-4 w-4 sm:h-5 sm:w-5" /> Start New Simulation
           </Button>
@@ -338,3 +394,5 @@ export function NegotiationSimulatorFeature() {
     </Card>
   );
 }
+
+    

@@ -19,7 +19,7 @@ export default function LandingPage() {
       description: 'Upload your contracts and our AI will scan them for potential risks, assigning a clear risk level (Low, Medium, High) with detailed reports and factors.',
       imgSrc: 'https://placehold.co/600x400.png',
       imgAlt: 'Contract Risk Scanner illustration',
-      aiHint: 'contract document',
+      aiHint: 'contract document analysis',
     },
     {
       icon: <MessageSquareText className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
@@ -27,7 +27,7 @@ export default function LandingPage() {
       description: "Don't get lost in legal jargon. Paste any complex legal clause and get an instant, easy-to-understand explanation in plain English.",
       imgSrc: 'https://placehold.co/600x400.png',
       imgAlt: 'Clause Decoder illustration',
-      aiHint: 'legal text',
+      aiHint: 'legal text simplification',
     },
     {
       icon: <ShieldAlert className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
@@ -43,7 +43,7 @@ export default function LandingPage() {
       description: 'Practice high-stakes contract negotiations risk-free. Simulate conversations against AI counterparties and get feedback to improve your skills.',
       imgSrc: 'https://placehold.co/600x400.png',
       imgAlt: 'AI Negotiation Simulator illustration',
-      aiHint: 'negotiation practice',
+      aiHint: 'negotiation practice chat',
     },
   ];
 
@@ -69,6 +69,31 @@ export default function LandingPage() {
       description: 'Use the AI Simulator to practice critical conversations, build confidence, and refine your negotiation strategies.',
     },
   ];
+
+  const testimonials = [
+    {
+      name: "Suresh Kumar",
+      title: "Freelance Consultant",
+      quote: "ContractGuard AI has revolutionized how I approach client contracts. The risk scanner is a lifesaver!",
+      avatar: "https://placehold.co/40x40.png",
+      aiHint: "man portrait"
+    },
+    {
+      name: "Ajay Sharma",
+      title: "Small Business Owner",
+      quote: "The Clause Decoder saved me hours of trying to understand complex terms. And the Negotiation Simulator actually helped me close a better deal.",
+      avatar: "https://placehold.co/40x40.png",
+      aiHint: "person thinking"
+    },
+    {
+      name: "Abhinav Patel",
+      title: "Startup Founder",
+      quote: "As a new founder, legal can be intimidating. ContractGuard AI gives me confidence, especially the Clause Guardian suggestions.",
+      avatar: "https://placehold.co/40x40.png",
+      aiHint: "professional headshot"
+    }
+  ];
+
 
   return (
     <>
@@ -165,7 +190,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Testimonial Placeholder Section */}
+        {/* Testimonial Section */}
         <section className="py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 md:mb-16">
@@ -175,17 +200,17 @@ export default function LandingPage() {
               </h2>
             </div>
             <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <Card key={i} className="bg-card shadow-lg rounded-xl p-6 transform hover:scale-105 transition-transform duration-300">
+              {testimonials.map((testimonial, index) => (
+                <Card key={index} className="bg-card shadow-lg rounded-xl p-6 transform hover:scale-105 transition-transform duration-300">
                   <CardContent className="pt-0">
                     <div className="flex items-center mb-4">
-                      <Image src="https://placehold.co/40x40.png" alt={`User ${i}`} width={40} height={40} className="rounded-full mr-3" data-ai-hint="person avatar" />
+                      <Image src={testimonial.avatar} alt={testimonial.name} width={40} height={40} className="rounded-full mr-3" data-ai-hint={testimonial.aiHint} />
                       <div>
-                        <p className="font-semibold text-foreground">User Name {i}</p>
-                        <p className="text-xs text-muted-foreground">Job Title, Company</p>
+                        <p className="font-semibold text-foreground">{testimonial.name}</p>
+                        <p className="text-xs text-muted-foreground">{testimonial.title}</p>
                       </div>
                     </div>
-                    <p className="text-muted-foreground italic">"ContractGuard AI has revolutionized how I approach contracts. The risk scanner is a lifesaver, and the negotiation simulator gave me the confidence I needed!"</p>
+                    <p className="text-muted-foreground italic">"{testimonial.quote}"</p>
                   </CardContent>
                 </Card>
               ))}
@@ -211,3 +236,5 @@ export default function LandingPage() {
     </>
   );
 }
+
+    

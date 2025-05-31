@@ -9,15 +9,29 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { AlertCircle, CheckCircle, FileText, Loader2, ShieldAlert, UploadCloud, Info } from 'lucide-react';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 export function ContractRiskScannerFeature() {
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingText, setLoadingText] = useState<string | null>(null);
   const [analysisResult, setAnalysisResult] = useState<ContractRiskScannerOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (isLoading) {
+      setLoadingText("ContractGuard AI is thinking...");
+      timer = setTimeout(() => {
+        setLoadingText("ContractGuard AI is analysing...");
+      }, 2500); // 2.5 seconds delay
+    } else {
+      setLoadingText(null);
+    }
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -119,6 +133,13 @@ export function ContractRiskScannerFeature() {
           {file && <p className="text-sm text-muted-foreground mt-2">Selected file: {file.name}</p>}
         </div>
 
+        {isLoading && loadingText && (
+          <div className="flex items-center justify-center p-4 my-4 text-sm text-primary bg-primary/10 rounded-md border border-primary/30">
+            <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+            <span>{loadingText}</span>
+          </div>
+        )}
+
         {error && (
           <Alert variant="destructive" className="mt-4 text-xs sm:text-sm">
             <AlertCircle className="h-4 w-4" />
@@ -127,7 +148,7 @@ export function ContractRiskScannerFeature() {
           </Alert>
         )}
 
-        {analysisResult && (
+        {analysisResult && !isLoading && (
           <div className="space-y-6 pt-6 border-t mt-6">
             <h3 className="text-xl font-semibold font-headline text-primary mb-2">Analysis Results</h3>
             
@@ -195,10 +216,10 @@ export function ContractRiskScannerFeature() {
       </CardContent>
       <CardFooter className="border-t p-4 sm:p-6 bg-muted/50">
         <Button onClick={handleSubmit} disabled={isLoading || !file} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
-          {isLoading ? (
+          {isLoading && loadingText ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              Analyzing...
+              {loadingText}
             </>
           ) : (
             <>
@@ -211,3 +232,5 @@ export function ContractRiskScannerFeature() {
     </Card>
   );
 }
+
+    
