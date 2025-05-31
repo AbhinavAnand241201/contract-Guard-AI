@@ -1,10 +1,30 @@
 
 import type { Metadata } from 'next';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { FileText, MessageSquareText, ShieldAlert, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users } from 'lucide-react';
+
+interface FeatureCard {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  imgSrc: string;
+  imgAlt: string;
+  imgWidth?: number;
+  imgHeight?: number;
+  aiHint: string;
+}
+
+interface Testimonial {
+  name: string;
+  title: string;
+  quote: string;
+  avatar: string;
+  aiHint: string;
+}
 
 export const metadata: Metadata = {
   title: 'ContractGuard AI - Secure Your Agreements with AI',
@@ -12,37 +32,45 @@ export const metadata: Metadata = {
 };
 
 export default function LandingPage() {
-  const features = [
+  const features: FeatureCard[] = [
     {
       icon: <FileText className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Contract Risk Scanner',
       description: 'Upload your contracts and our AI will scan them for potential risks, assigning a clear risk level (Low, Medium, High) with detailed reports and factors.',
-      imgSrc: 'https://placehold.co/600x400.png',
+      imgSrc: '/assets/images/features/risk-scanner.jpg',
       imgAlt: 'Contract Risk Scanner illustration',
+      imgWidth: 600,
+      imgHeight: 400,
       aiHint: 'contract document analysis',
     },
     {
       icon: <MessageSquareText className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'Plain-English Clause Decoder',
       description: "Don't get lost in legal jargon. Paste any complex legal clause and get an instant, easy-to-understand explanation in plain English.",
-      imgSrc: 'https://placehold.co/600x400.png',
+      imgSrc: '/assets/images/features/clause-decoder.jpg',
       imgAlt: 'Clause Decoder illustration',
+      imgWidth: 600,
+      imgHeight: 400,
       aiHint: 'legal text simplification',
     },
     {
       icon: <ShieldAlert className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'Clause Guardian AI',
       description: 'Provide your contract text, and our AI will identify potentially unfavorable clauses and offer suggestions for improvement to safeguard your interests.',
-      imgSrc: 'https://placehold.co/600x400.png',
+      imgSrc: '/assets/images/features/clause-guardian.jpg',
       imgAlt: 'Clause Guardian AI illustration',
+      imgWidth: 600,
+      imgHeight: 400,
       aiHint: 'shield protection',
     },
     {
       icon: <Brain className="w-12 h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Negotiation Simulator',
       description: 'Practice high-stakes contract negotiations risk-free. Simulate conversations against AI counterparties and get feedback to improve your skills.',
-      imgSrc: 'https://placehold.co/600x400.png',
+      imgSrc: '/assets/images/features/negotiation-simulator.jpg',
       imgAlt: 'AI Negotiation Simulator illustration',
+      imgWidth: 600,
+      imgHeight: 400,
       aiHint: 'negotiation practice chat',
     },
   ];
@@ -70,26 +98,26 @@ export default function LandingPage() {
     },
   ];
 
-  const testimonials = [
+  const testimonials: Testimonial[] = [
     {
       name: "Suresh Kumar",
       title: "Freelance Consultant",
       quote: "ContractGuard AI has revolutionized how I approach client contracts. The risk scanner is a lifesaver!",
-      avatar: "https://placehold.co/40x40.png",
+      avatar: "/assets/images/avatars/avatar1.jpg",
       aiHint: "man portrait"
     },
     {
       name: "Ajay Sharma",
       title: "Small Business Owner",
       quote: "The Clause Decoder saved me hours of trying to understand complex terms. And the Negotiation Simulator actually helped me close a better deal.",
-      avatar: "https://placehold.co/40x40.png",
+      avatar: "/assets/images/avatars/avatar2.jpg",
       aiHint: "person thinking"
     },
     {
       name: "Abhinav Patel",
       title: "Startup Founder",
       quote: "As a new founder, legal can be intimidating. ContractGuard AI gives me confidence, especially the Clause Guardian suggestions.",
-      avatar: "https://placehold.co/40x40.png",
+      avatar: "/assets/images/avatars/avatar3.jpg",
       aiHint: "professional headshot"
     }
   ];
@@ -141,14 +169,18 @@ export default function LandingPage() {
                     <CardTitle className="text-xl font-headline group-hover:text-primary transition-colors duration-300">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="flex-grow p-6 text-center flex flex-col items-center">
-                    <Image 
-                      src={feature.imgSrc} 
-                      alt={feature.imgAlt} 
-                      width={600} 
-                      height={400} 
-                      className="rounded-lg mb-5 aspect-video object-cover shadow-md group-hover:opacity-90 transition-opacity duration-300"
-                      data-ai-hint={feature.aiHint} 
-                    />
+                    <div className="relative w-full h-48 overflow-hidden rounded-lg mb-5 shadow-md group-hover:opacity-90 transition-opacity duration-300">
+                      <Image 
+                        src={feature.imgSrc}
+                        alt={feature.imgAlt}
+                        width={feature.imgWidth || 600}
+                        height={feature.imgHeight || 400}
+                        className="object-cover"
+                        priority={index < 2}
+                        quality={75}
+                        data-ai-hint={feature.aiHint}
+                      />
+                    </div>
                     <p className="text-muted-foreground text-sm leading-relaxed flex-grow">{feature.description}</p>
                      <Button variant="link" asChild className="mt-4 text-primary group-hover:text-accent transition-colors duration-300">
                         <Link href="/dashboard">Learn More <ArrowRight className="ml-1 h-4 w-4"/></Link>
