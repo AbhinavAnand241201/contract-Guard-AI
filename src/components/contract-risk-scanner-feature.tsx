@@ -62,6 +62,7 @@ export function ContractRiskScannerFeature() {
         setIsLoading(false); 
       };
       reader.onerror = () => {
+        setIsLoading(false); 
         throw new Error("Error reading file.");
       }
     } catch (err) {
@@ -76,7 +77,7 @@ export function ContractRiskScannerFeature() {
     } 
   };
 
-  const getRiskScoreColor = (score: number) => {
+  const getRiskScoreColorClass = (score: number) => {
     if (score > 70) return 'bg-destructive'; 
     if (score > 40) return 'bg-yellow-500'; 
     return 'bg-green-500'; 
@@ -126,39 +127,43 @@ export function ContractRiskScannerFeature() {
 
         {analysisResult && (
           <div className="space-y-6 pt-6 border-t mt-6">
-            <h3 className="text-xl font-semibold font-headline text-primary">Analysis Results</h3>
+            <h3 className="text-xl font-semibold font-headline text-primary mb-2">Analysis Results</h3>
             
-            <Card className="bg-card">
+            <Card className="bg-card border">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-lg">
                   <ShieldCheck className="w-6 h-6 text-primary" />
                   Overall Risk Score: {analysisResult.riskScore}/100
                 </CardTitle>
-                <CardDescription className="font-medium">{getRiskLevelText(analysisResult.riskScore)}</CardDescription>
+                <CardDescription className={`font-semibold text-base ${analysisResult.riskScore > 70 ? 'text-destructive' : analysisResult.riskScore > 40 ? 'text-yellow-600' : 'text-green-600'}`}>
+                  {getRiskLevelText(analysisResult.riskScore)}
+                </CardDescription>
               </CardHeader>
-              <CardContent>
-                <Progress value={analysisResult.riskScore} className={`h-3 rounded-full [&>div]:${getRiskScoreColor(analysisResult.riskScore)}`} />
+              <CardContent className="px-6 pb-6">
+                <Progress value={analysisResult.riskScore} className={`h-3 rounded-full [&>div]:${getRiskScoreColorClass(analysisResult.riskScore)}`} />
               </CardContent>
             </Card>
 
-            <Card className="bg-card">
+            <Card className="bg-card border">
               <CardHeader>
                 <CardTitle className="text-lg">Risk Report</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-sm whitespace-pre-wrap bg-muted/50 p-4 rounded-md max-h-60 overflow-y-auto border">{analysisResult.riskReport}</p>
+              <CardContent className="px-6 pb-6">
+                <div className="text-sm whitespace-pre-wrap bg-muted/50 p-4 rounded-md max-h-60 overflow-y-auto border">
+                  {analysisResult.riskReport}
+                </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-card">
+            <Card className="bg-card border">
               <CardHeader>
                 <CardTitle className="text-lg">Identified Risk Factors</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-6 pb-6">
                 {analysisResult.riskFactors.length > 0 ? (
-                  <ul className="space-y-2">
+                  <ul className="space-y-3">
                     {analysisResult.riskFactors.map((factor, index) => (
-                      <li key={index} className="flex items-start gap-2 p-3 bg-muted/50 rounded-md border">
+                      <li key={index} className="flex items-start gap-3 p-3 bg-muted/50 rounded-md border">
                         <AlertCircle className="w-5 h-5 text-destructive mt-0.5 shrink-0" /> 
                         <span className="text-sm">{factor}</span>
                       </li>

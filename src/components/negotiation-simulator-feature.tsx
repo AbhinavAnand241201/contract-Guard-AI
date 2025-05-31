@@ -12,7 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
-import { AlertCircle, Brain, Loader2, MessageCircle, Mic, Sparkles, ThumbsUp, TrendingUp, Zap } from 'lucide-react';
+import { AlertCircle, Brain, Loader2, MessageCircle, Send, Sparkles, ThumbsUp, TrendingUp, Zap, CornerDownLeft } from 'lucide-react';
 import React, { useState, useRef, useEffect } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -46,10 +46,17 @@ export function NegotiationSimulatorFeature() {
 
   const { toast } = useToast();
   const conversationEndRef = useRef<null | HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     conversationEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [conversationHistory]);
+
+  useEffect(() => {
+    if (simulationStarted && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [simulationStarted]);
 
   const handleStartSimulation = () => {
     if (!selectedScenario || !selectedRole) {
@@ -74,7 +81,7 @@ export function NegotiationSimulatorFeature() {
   };
 
   const handleSendMessage = async () => {
-    if (!currentUserInput.trim()) return;
+    if (!currentUserInput.trim() || isLoading) return;
 
     const newUserMessage: ConversationMessage = { speaker: 'user', message: currentUserInput };
     const updatedHistory = [...conversationHistory, newUserMessage];
@@ -87,7 +94,7 @@ export function NegotiationSimulatorFeature() {
       const input: NegotiationSimulatorInput = {
         role: selectedRole as NegotiationSimulatorInput['role'], 
         scenario: selectedScenario,
-        conversationHistory: updatedHistory,
+        conversationHistory: updatedHistory.map(msg => ({ speaker: msg.speaker, message: msg.message })), // Ensure correct type
         userInput: newUserMessage.message,
       };
       const result = await negotiationSimulator(input);
@@ -98,6 +105,7 @@ export function NegotiationSimulatorFeature() {
       toast({ title: "AI Error", description: errorMessage, variant: "destructive" });
     } finally {
       setIsLoading(false);
+      inputRef.current?.focus();
     }
   };
 
@@ -109,7 +117,7 @@ export function NegotiationSimulatorFeature() {
       const input: NegotiationFeedbackInput = {
         role: selectedRole,
         scenario: selectedScenario,
-        conversationHistory: conversationHistory,
+        conversationHistory: conversationHistory.map(msg => ({ speaker: msg.speaker, message: msg.message })), // Ensure correct type
       };
       const result = await negotiationFeedback(input);
       setFeedbackResult(result);
@@ -156,9 +164,9 @@ export function NegotiationSimulatorFeature() {
         <CardContent className="p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="scenario-select" className="text-base font-medium">Select Scenario (5 available)</Label>
+              <Label htmlFor="scenario-select" className="text-base font-medium">Select Scenario</Label>
               <Select value={selectedScenario} onValueChange={setSelectedScenario}>
-                <SelectTrigger id="scenario-select" className="bg-background">
+                <SelectTrigger id="scenario-select" className="bg-background border">
                   <SelectValue placeholder="Choose a negotiation scenario" />
                 </SelectTrigger>
                 <SelectContent>
@@ -171,7 +179,7 @@ export function NegotiationSimulatorFeature() {
             <div className="space-y-2">
               <Label htmlFor="role-select" className="text-base font-medium">Select AI Counterparty Role</Label>
               <Select value={selectedRole} onValueChange={setSelectedRole}>
-                <SelectTrigger id="role-select" className="bg-background">
+                <SelectTrigger id="role-select" className="bg-background border">
                   <SelectValue placeholder="Choose AI's role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -182,70 +190,69 @@ export function NegotiationSimulatorFeature() {
               </Select>
             </div>
           </div>
-           <Button onClick={handleStartSimulation} disabled={!selectedScenario || !selectedRole} className="w-full text-base py-3 mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
+           <Button onClick={handleStartSimulation} disabled={!selectedScenario || !selectedRole} className="w-full text-base py-3 px-6 mt-4 bg-primary hover:bg-primary/90 text-primary-foreground">
             <Zap className="mr-2 h-5 w-5" /> Start Simulation
           </Button>
         </CardContent>
       )}
 
       {simulationStarted && (
-        <CardContent className="p-6 space-y-4 flex flex-col max-h-[70vh]">
-          <ScrollArea className="flex-grow pr-4 -mr-4 mb-4 h-64 md:h-96"> 
+        <CardContent className="p-6 space-y-4 flex flex-col max-h-[calc(100vh-20rem)] md:max-h-[calc(100vh-22rem)]">
+          <ScrollArea className="flex-grow pr-4 -mr-4 mb-4 h-64 md:h-96 border rounded-lg bg-muted/30 p-4"> 
             <div className="space-y-4">
               {conversationHistory.map((msg, index) => (
-                <div key={index} className={`flex ${msg.speaker === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[70%] p-3 rounded-lg text-sm ${msg.speaker === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground'}`}>
+                <div key={index} className={`flex flex-col ${msg.speaker === 'user' ? 'items-end' : 'items-start'}`}>
+                  <div className={`max-w-[80%] p-3 rounded-lg text-sm shadow-md ${msg.speaker === 'user' ? 'bg-primary text-primary-foreground rounded-br-none' : 'bg-card text-foreground border rounded-bl-none'}`}>
                     <p className="font-semibold mb-1">{msg.speaker === 'user' ? 'You' : selectedRole}</p>
-                    {msg.message}
+                    <p className="whitespace-pre-wrap">{msg.message}</p>
                   </div>
                 </div>
               ))}
               <div ref={conversationEndRef} />
             </div>
           </ScrollArea>
-          <div className="flex gap-2 items-end pt-2 border-t">
+          <div className="flex gap-2 items-end pt-4 border-t">
             <Textarea
+              ref={inputRef}
               value={currentUserInput}
               onChange={(e) => setCurrentUserInput(e.target.value)}
               placeholder="Type your response..."
               rows={2}
-              className="flex-grow resize-none text-sm p-2 focus:border-primary transition-colors bg-background"
+              className="flex-grow resize-none text-sm p-2 focus:border-primary transition-colors bg-background border"
               onKeyDown={(e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
                   handleSendMessage();
                 }
               }}
+              disabled={isLoading}
             />
-            <Button onClick={handleSendMessage} disabled={isLoading || !currentUserInput.trim()} className="py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground">
-              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Mic className="h-5 w-5" />}
+            <Button onClick={handleSendMessage} disabled={isLoading || !currentUserInput.trim()} className="py-2 px-4 bg-primary hover:bg-primary/90 text-primary-foreground self-stretch text-base">
+              {isLoading ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5" />}
               <span className="ml-2 hidden sm:inline">Send</span>
             </Button>
           </div>
+           {error && (
+              <Alert variant="destructive" className="mt-2">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>Error</AlertTitle>
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+          )}
         </CardContent>
       )}
       
-      {error && simulationStarted && (
-          <CardContent className="p-6">
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          </CardContent>
-        )}
-
       {(simulationStarted || simulationEnded) && (
-        <CardFooter className="border-t p-4 bg-muted/50 flex justify-between">
+        <CardFooter className="border-t p-6 bg-muted/50 flex flex-col sm:flex-row justify-between gap-3">
           {simulationStarted && (
-             <Button onClick={handleEndSimulation} disabled={isFeedbackLoading || isLoading || conversationHistory.length === 0} variant="outline" className="text-base">
+             <Button onClick={handleEndSimulation} disabled={isFeedbackLoading || isLoading || conversationHistory.length === 0} variant="outline" className="w-full sm:w-auto text-base py-3 px-6">
                 {isFeedbackLoading ? <Loader2 className="mr-2 h-5 w-5 animate-spin" /> : <ThumbsUp className="mr-2 h-5 w-5" />}
                 End & Get Feedback
             </Button>
           )}
-          {simulationEnded && (
-            <Button onClick={handleNewSimulation} className="text-base bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Sparkles className="mr-2 h-5 w-5" /> Start New Simulation
+          {(simulationEnded || simulationStarted) && ( 
+            <Button onClick={handleNewSimulation} variant="ghost" className="w-full sm:w-auto text-base py-3 px-6 text-muted-foreground hover:text-primary">
+                <CornerDownLeft className="mr-2 h-5 w-5" /> Start New Simulation
             </Button>
           )}
         </CardFooter>
@@ -254,30 +261,30 @@ export function NegotiationSimulatorFeature() {
 
       {feedbackResult && simulationEnded && (
         <CardContent className="p-6 border-t">
-          <h3 className="text-xl font-semibold font-headline text-primary mb-4">Negotiation Feedback</h3>
-          <div className="space-y-4">
-            <Card className="bg-card border">
+          <h3 className="text-2xl font-semibold font-headline text-primary mb-6">Negotiation Feedback</h3>
+          <div className="grid md:grid-cols-3 gap-6">
+            <Card className="bg-card border shadow-sm">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg"><TrendingUp className="text-green-500"/>Effectiveness Score</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-lg"><TrendingUp className="text-green-500 w-6 h-6"/>Effectiveness Score</CardTitle>
               </CardHeader>
-              <CardContent>
-                <p className="text-3xl font-bold text-center text-primary">{feedbackResult.effectivenessScore} <span className="text-lg font-normal text-muted-foreground">/ 100</span></p>
+              <CardContent className="text-center">
+                <p className="text-5xl font-bold text-primary">{feedbackResult.effectivenessScore}<span className="text-2xl font-normal text-muted-foreground">/100</span></p>
               </CardContent>
             </Card>
-            <Card className="bg-card border">
+            <Card className="bg-card border shadow-sm md:col-span-1">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg"><AlertCircle className="text-destructive"/>Key Mistake</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-lg"><AlertCircle className="text-destructive w-6 h-6"/>Key Mistake</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm">{feedbackResult.keyMistake}</p>
+                <p className="text-sm leading-relaxed">{feedbackResult.keyMistake}</p>
               </CardContent>
             </Card>
-            <Card className="bg-card border">
+            <Card className="bg-card border shadow-sm md:col-span-1">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg"><MessageCircle className="text-blue-500"/>Improvement Suggestion</CardTitle>
+                <CardTitle className="flex items-center gap-2 text-lg"><MessageCircle className="text-blue-500 w-6 h-6"/>Improvement Suggestion</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm">{feedbackResult.improvementSuggestion}</p>
+                <p className="text-sm leading-relaxed">{feedbackResult.improvementSuggestion}</p>
               </CardContent>
             </Card>
           </div>

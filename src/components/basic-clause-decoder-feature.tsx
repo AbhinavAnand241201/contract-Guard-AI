@@ -76,7 +76,7 @@ export function BasicClauseDecoderFeature() {
             onChange={(e) => setClauseText(e.target.value)}
             placeholder="Paste or type your legal clause here..."
             rows={6} 
-            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background"
+            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border"
           />
         </div>
 

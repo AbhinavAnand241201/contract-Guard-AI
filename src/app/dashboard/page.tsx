@@ -15,25 +15,25 @@ export default function DashboardPage() {
   return (
     <>
       <main className="flex-grow container mx-auto px-4 py-8">
-        <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold font-headline text-foreground">ContractGuard AI Dashboard</h1>
-          <p className="text-muted-foreground">Your tools for smarter contract management and negotiation.</p>
+        <div className="mb-12 text-center">
+          <h1 className="text-4xl font-bold font-headline text-foreground">ContractGuard AI Dashboard</h1>
+          <p className="text-lg text-muted-foreground mt-2">Your intelligent tools for smarter contract management and negotiation.</p>
         </div>
         <Tabs defaultValue="risk-scanner" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 mb-8 bg-card border rounded-lg shadow-sm">
-            <TabsTrigger value="risk-scanner" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner">
+          <TabsList className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 mb-10 bg-card border rounded-lg shadow-sm p-2">
+            <TabsTrigger value="risk-scanner" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner rounded-md">
               <FileText className="mr-2 h-5 w-5" /> Risk Scanner
             </TabsTrigger>
-            <TabsTrigger value="clause-decoder" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner">
+            <TabsTrigger value="clause-decoder" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner rounded-md">
               <MessageSquareText className="mr-2 h-5 w-5" /> Clause Decoder
             </TabsTrigger>
-            <TabsTrigger value="one-click-protection" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner">
+            <TabsTrigger value="one-click-protection" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner rounded-md">
               <ShieldPlus className="mr-2 h-5 w-5" /> 1-Click Protection
             </TabsTrigger>
-            <TabsTrigger value="negotiation-simulator" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner">
+            <TabsTrigger value="negotiation-simulator" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner rounded-md">
               <Brain className="mr-2 h-5 w-5" /> AI Simulator
             </TabsTrigger>
-            <TabsTrigger value="export-reports" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner">
+            <TabsTrigger value="export-reports" className="py-3 text-sm sm:text-base data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-inner rounded-md">
               <DownloadCloud className="mr-2 h-5 w-5" /> Export Reports
             </TabsTrigger>
           </TabsList>

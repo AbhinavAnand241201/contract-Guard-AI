@@ -76,7 +76,7 @@ export function OneClickProtectionFeature() {
             onChange={(e) => setContractText(e.target.value)}
             placeholder="Paste the full text of your contract here..."
             rows={10} 
-            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background"
+            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border"
           />
         </div>
 
