@@ -1,6 +1,8 @@
+
 import { Shield } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { ThemeToggleButton } from './theme-toggle-button'; // Import ThemeToggleButton
 
 export function AppHeader() {
   return (
@@ -10,7 +12,7 @@ export function AppHeader() {
           <Shield className="w-7 h-7" />
           <h1 className="text-2xl font-semibold font-headline">ContractGuard AI</h1>
         </Link>
-        <nav className="flex items-center gap-4">
+        <nav className="flex items-center gap-3 sm:gap-4">
           <Link href="/#features" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
             Features
           </Link>
@@ -20,9 +22,10 @@ export function AppHeader() {
           <Link href="/dashboard" className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
             Dashboard
           </Link>
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="hidden sm:inline-flex">
             <Link href="/dashboard">Get Started</Link>
           </Button>
+          <ThemeToggleButton />
         </nav>
       </div>
     </header>
