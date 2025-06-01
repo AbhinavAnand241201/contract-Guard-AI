@@ -26,7 +26,7 @@ export function ClauseGuardianFeature() {
       setLoadingText("ContractGuard AI is thinking...");
       timer = setTimeout(() => {
         setLoadingText("ContractGuard AI is analysing...");
-      }, 2500); // 2.5 seconds delay
+      }, 2500); 
     } else {
       setLoadingText(null);
     }
@@ -71,13 +71,13 @@ export function ClauseGuardianFeature() {
   };
 
   return (
-    <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="border-b p-4 sm:p-6"> 
+    <Card className="w-full shadow-xl rounded-xl overflow-hidden card-hover-effect">
+      <CardHeader className="border-b p-4 sm:p-6 bg-card/50"> 
         <div className="flex items-center gap-3">
           <ShieldAlert className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
           <div>
             <CardTitle className="text-xl sm:text-2xl font-headline">Clause Guardian AI</CardTitle>
-            <CardDescription className="text-sm">Get AI-powered suggestions to improve potentially risky or unfavorable clauses in your contract.</CardDescription>
+            <CardDescription className="text-sm text-muted-foreground">Get AI-powered suggestions to improve potentially risky or unfavorable clauses in your contract.</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -90,7 +90,7 @@ export function ClauseGuardianFeature() {
             onChange={(e) => setContractText(e.target.value)}
             placeholder="Paste the full text of your contract here..."
             rows={10} 
-            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border"
+            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border shadow-sm"
             disabled={isLoading}
           />
         </div>
@@ -103,7 +103,7 @@ export function ClauseGuardianFeature() {
         )}
 
         {error && !isLoading && (
-          <Alert variant="destructive" className="mt-4">
+          <Alert variant="destructive" className="mt-4 text-xs sm:text-sm">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
@@ -112,10 +112,10 @@ export function ClauseGuardianFeature() {
 
         {analysisResult && !isLoading && (
           <div className="space-y-6 pt-6 border-t mt-6">
-            <h3 className="text-xl font-semibold font-headline text-primary">Suggested Improvements</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold font-headline text-primary">Suggested Improvements</h3>
             {analysisResult.suggestedImprovements.length > 0 ? (
               analysisResult.suggestedImprovements.map((item, index) => (
-                <Card key={index} className="bg-muted/30 border rounded-lg">
+                <Card key={index} className="bg-muted/50 border rounded-lg shadow-md">
                   <CardHeader className="pb-3 pt-4 px-4 sm:px-5">
                     <CardTitle className="text-base sm:text-lg font-semibold">Suggestion {index + 1}</CardTitle>
                   </CardHeader>
@@ -138,10 +138,10 @@ export function ClauseGuardianFeature() {
             ) : (
               <p className="text-sm text-muted-foreground">No specific improvement suggestions were generated for this contract at this time.</p>
             )}
-             <Alert variant="default" className="mt-6 bg-accent/10 border-accent text-accent-foreground">
+             <Alert variant="default" className="mt-6 bg-accent/10 border-accent/50 text-accent-foreground text-xs sm:text-sm shadow">
               <Info className="h-5 w-5 text-accent" />
               <AlertTitle className="font-semibold text-accent">Important Disclaimer</AlertTitle>
-              <AlertDescription className="text-xs sm:text-sm">
+              <AlertDescription>
                 {analysisResult.disclaimer}
               </AlertDescription>
             </Alert>
@@ -149,7 +149,7 @@ export function ClauseGuardianFeature() {
         )}
       </CardContent>
       <CardFooter className="border-t p-4 sm:p-6 bg-muted/50">
-        <Button onClick={handleSubmit} disabled={isLoading || !contractText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
+        <Button onClick={handleSubmit} disabled={isLoading || !contractText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground button-hover-effect shadow-md hover:shadow-lg">
           {isLoading && loadingText ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -166,5 +166,3 @@ export function ClauseGuardianFeature() {
     </Card>
   );
 }
-
-    

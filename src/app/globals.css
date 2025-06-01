@@ -42,7 +42,7 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Slightly increased radius for a softer look */
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -56,47 +56,47 @@ body {
 
   .dark {
     --background: 240 10% 3.9%; /* Very Dark Blue/Almost Black */
-    --foreground: 0 0% 98%; /* White */
+    --foreground: 0 0% 95%; /* Lighter white for better readability */
 
-    --card: 240 5.9% 10%; /* Darker than background */
-    --card-foreground: 0 0% 98%;
+    --card: 240 6% 10%; /* Slightly lighter than background for depth */
+    --card-foreground: 0 0% 95%;
 
-    --popover: 240 5.9% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 240 6% 10%;
+    --popover-foreground: 0 0% 95%;
 
-    --primary: 270 70% 65%; /* Vibrant Purple */
-    --primary-foreground: 0 0% 98%; /* White text on primary */
+    --primary: 260 75% 65%; /* Deeper, vibrant Purple */
+    --primary-foreground: 0 0% 100%; /* White text on primary */
 
-    --secondary: 240 3.7% 15.9%; /* Darker secondary */
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 4% 16%; /* Darker secondary */
+    --secondary-foreground: 0 0% 95%;
 
-    --muted: 240 3.7% 15.9%; /* Same as secondary for consistency */
-    --muted-foreground: 240 5% 64.9%; /* Lighter muted text */
+    --muted: 240 4% 12%; /* Even darker muted for subtle backgrounds */
+    --muted-foreground: 240 5% 60%; /* Lighter muted text for contrast */
 
-    --accent: 250 80% 70%; /* Indigo / Brighter Purple */
-    --accent-foreground: 0 0% 98%; 
+    --accent: 280 80% 70%; /* Indigo / Brighter Purple for accents */
+    --accent-foreground: 0 0% 100%; 
 
     --destructive: 0 62.8% 50.6%; /* Keep destructive noticeable */
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 3.7% 15.9%; /* Dark border */
-    --input: 240 3.7% 15.9%; /* Dark input */
-    --ring: 270 70% 65%; /* Purple for ring */
+    --border: 240 4% 18%; /* Subtle dark border */
+    --input: 240 4% 15%; /* Dark input background */
+    --ring: 260 75% 65%; /* Purple for ring */
     
-    --chart-1: 270 70% 50%;
-    --chart-2: 250 60% 45%;
+    --chart-1: 260 70% 50%;
+    --chart-2: 280 60% 45%;
     --chart-3: 300 80% 55%; /* Magenta like color for contrast */
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --chart-4: 270 65% 60%;
+    --chart-5: 320 75% 55%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 270 70% 60%; /* Dark Purple */
+    --sidebar-primary: 260 70% 60%; /* Dark Purple */
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 270 70% 60%;
+    --sidebar-ring: 260 70% 60%;
   }
 }
 
@@ -107,5 +107,14 @@ body {
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer components {
+  .card-hover-effect {
+    @apply shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1;
+  }
+  .button-hover-effect {
+    @apply hover:scale-105 transition-transform duration-300 ease-in-out;
   }
 }

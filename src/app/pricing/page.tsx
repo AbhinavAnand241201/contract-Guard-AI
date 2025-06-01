@@ -88,13 +88,13 @@ export default function PricingPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 items-stretch">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {pricingPlans.map((plan, index) => (
             <Card 
               key={index} 
-              className={`shadow-lg hover:shadow-2xl transition-shadow duration-300 rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-2 ring-accent/30' : 'border-border'}`}
+              className={`shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-4 ring-accent/20' : 'border-border'}`}
             >
-              <CardHeader className="text-center items-center pt-8 border-b">
+              <CardHeader className="text-center items-center pt-8 border-b bg-card/50">
                 {plan.icon}
                 <CardTitle className="text-3xl font-headline">{plan.title}</CardTitle>
                 <div className="my-4">
@@ -114,7 +114,7 @@ export default function PricingPage() {
                 </ul>
               </CardContent>
               <CardFooter className="pt-6 pb-8 border-t bg-muted/50">
-                <Button asChild className={`w-full text-base py-3 ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
+                <Button asChild className={`w-full text-base py-3 button-hover-effect shadow hover:shadow-md ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
                   <Link href={plan.href}>{plan.cta}</Link>
                 </Button>
               </CardFooter>
@@ -123,7 +123,7 @@ export default function PricingPage() {
         </div>
 
         <div className="mt-16 text-center text-muted-foreground text-sm">
-          <p>All plans come with robust security and privacy features. Need something different? <Link href="/contact-sales" className="text-primary hover:underline">Contact us</Link> for custom solutions.</p>
+          <p>All plans come with robust security and privacy features. Need something different? <Link href="/contact-sales" className="text-primary hover:underline hover:text-accent transition-colors">Contact us</Link> for custom solutions.</p>
         </div>
       </main>
     </>

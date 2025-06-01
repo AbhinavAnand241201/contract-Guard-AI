@@ -26,7 +26,7 @@ export function BasicClauseDecoderFeature() {
       setLoadingText("ContractGuard AI is thinking...");
       timer = setTimeout(() => {
         setLoadingText("ContractGuard AI is analysing...");
-      }, 2500); // 2.5 seconds delay
+      }, 2500); 
     } else {
       setLoadingText(null);
     }
@@ -71,13 +71,13 @@ export function BasicClauseDecoderFeature() {
   };
 
   return (
-    <Card className="w-full shadow-lg rounded-xl overflow-hidden">
-      <CardHeader className="border-b p-4 sm:p-6"> 
+    <Card className="w-full shadow-xl rounded-xl overflow-hidden card-hover-effect">
+      <CardHeader className="border-b p-4 sm:p-6 bg-card/50"> 
         <div className="flex items-center gap-3">
           <MessageSquareText className="w-7 h-7 sm:w-8 sm:h-8 text-primary shrink-0" />
           <div>
             <CardTitle className="text-xl sm:text-2xl font-headline">Basic Clause Decoder</CardTitle>
-            <CardDescription className="text-sm">Understand complex legal terms. Enter a clause to get a plain-English explanation.</CardDescription>
+            <CardDescription className="text-sm text-muted-foreground">Understand complex legal terms. Enter a clause to get a plain-English explanation.</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -90,7 +90,7 @@ export function BasicClauseDecoderFeature() {
             onChange={(e) => setClauseText(e.target.value)}
             placeholder="Paste or type your legal clause here..."
             rows={6} 
-            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border"
+            className="resize-none text-sm p-3 focus:border-primary transition-colors bg-background border shadow-sm"
             disabled={isLoading}
           />
         </div>
@@ -113,12 +113,12 @@ export function BasicClauseDecoderFeature() {
         {explanation && !isLoading && (
           <div className="space-y-4 pt-6 border-t mt-6">
             <h3 className="text-lg sm:text-xl font-semibold font-headline text-primary">Explanation</h3>
-            <Card className="bg-muted/30 border rounded-lg"> 
+            <Card className="bg-muted/50 border rounded-lg shadow-md"> 
               <CardContent className="p-3 sm:p-4">
                 <p className="text-sm whitespace-pre-wrap leading-relaxed">{explanation}</p>
               </CardContent>
             </Card>
-            <Alert variant="default" className="mt-6 bg-accent/10 border-accent text-accent-foreground text-xs sm:text-sm">
+            <Alert variant="default" className="mt-6 bg-accent/10 border-accent/50 text-accent-foreground text-xs sm:text-sm shadow">
               <Info className="h-5 w-5 text-accent" />
               <AlertTitle className="font-semibold text-accent">Important Disclaimer</AlertTitle>
               <AlertDescription>
@@ -129,7 +129,7 @@ export function BasicClauseDecoderFeature() {
         )}
       </CardContent>
       <CardFooter className="border-t p-4 sm:p-6 bg-muted/50">
-        <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground">
+        <Button onClick={handleSubmit} disabled={isLoading || !clauseText.trim()} className="w-full sm:w-auto text-base py-3 px-6 bg-primary hover:bg-primary/90 text-primary-foreground button-hover-effect shadow-md hover:shadow-lg">
           {isLoading && loadingText ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
@@ -146,5 +146,3 @@ export function BasicClauseDecoderFeature() {
     </Card>
   );
 }
-
-    
