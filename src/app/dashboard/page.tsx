@@ -15,9 +15,9 @@ export default function DashboardPage() {
   return (
     <>
       <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="mb-10 text-center">
+        <div className="mb-8 sm:mb-10 text-center">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-headline text-foreground">ContractGuard AI Dashboard</h1>
-          <p className="text-md sm:text-lg lg:text-xl text-muted-foreground mt-3 max-w-2xl mx-auto">Your intelligent tools for smarter contract management and negotiation.</p>
+          <p className="text-md sm:text-lg lg:text-xl text-muted-foreground mt-2 sm:mt-3 max-w-2xl mx-auto">Your intelligent tools for smarter contract management and negotiation.</p>
         </div>
         <Tabs defaultValue="risk-scanner" className="w-full">
           <TabsList className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 p-2 bg-muted rounded-lg shadow-md">

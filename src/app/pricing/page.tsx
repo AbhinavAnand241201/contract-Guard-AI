@@ -88,33 +88,33 @@ export default function PricingPage() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
           {pricingPlans.map((plan, index) => (
             <Card 
               key={index} 
-              className={`shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-4 ring-accent/20' : 'border-border'}`}
+              className={`card-hover-effect rounded-xl flex flex-col ${plan.popular ? 'border-2 border-accent ring-4 ring-accent/20' : 'border-border'}`}
             >
               <CardHeader className="text-center items-center pt-8 border-b bg-card/50">
                 {plan.icon}
-                <CardTitle className="text-3xl font-headline">{plan.title}</CardTitle>
-                <div className="my-4">
-                  <span className="text-4xl font-bold text-primary">{plan.price}</span>
-                  {plan.period && <span className="text-muted-foreground">{plan.period}</span>}
+                <CardTitle className="text-2xl sm:text-3xl font-headline">{plan.title}</CardTitle>
+                <div className="my-3 sm:my-4">
+                  <span className="text-3xl sm:text-4xl font-bold text-primary">{plan.price}</span>
+                  {plan.period && <span className="text-sm sm:text-base text-muted-foreground">{plan.period}</span>}
                 </div>
-                <CardDescription className="text-sm h-12 px-2">{plan.description}</CardDescription>
+                <CardDescription className="text-xs sm:text-sm h-10 sm:h-12 px-2">{plan.description}</CardDescription>
               </CardHeader>
-              <CardContent className="flex-grow pt-6">
-                <ul className="space-y-3 text-sm">
+              <CardContent className="flex-grow pt-5 sm:pt-6">
+                <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm">
                   {plan.features.map((feature, fIndex) => (
                     <li key={fIndex} className="flex items-center">
-                      <CheckCircle className="w-5 h-5 text-green-500 mr-2 shrink-0" />
+                      <CheckCircle className="w-4 h-4 sm:w-5 sm:w-5 text-green-500 mr-2 shrink-0" />
                       <span>{feature}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter className="pt-6 pb-8 border-t bg-muted/50">
-                <Button asChild className={`w-full text-base py-3 button-hover-effect shadow hover:shadow-md ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
+              <CardFooter className="pt-5 sm:pt-6 pb-6 sm:pb-8 border-t bg-muted/50">
+                <Button asChild className={`w-full text-sm sm:text-base py-2.5 sm:py-3 button-hover-effect shadow hover:shadow-md ${plan.popular ? 'bg-accent hover:bg-accent/90 text-accent-foreground' : 'bg-primary hover:bg-primary/90 text-primary-foreground'}`}>
                   <Link href={plan.href}>{plan.cta}</Link>
                 </Button>
               </CardFooter>
@@ -122,7 +122,7 @@ export default function PricingPage() {
           ))}
         </div>
 
-        <div className="mt-16 text-center text-muted-foreground text-sm">
+        <div className="mt-12 sm:mt-16 text-center text-muted-foreground text-xs sm:text-sm">
           <p>All plans come with robust security and privacy features. Need something different? <Link href="/contact-sales" className="text-primary hover:underline hover:text-accent transition-colors">Contact us</Link> for custom solutions.</p>
         </div>
       </main>

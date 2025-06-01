@@ -18,16 +18,18 @@ body {
     --popover: 0 0% 100%;
     --popover-foreground: 220 25% 10%;
 
-    --primary: 207 90% 54%; /* Soft Blue (Trust and Security) */
+    --primary: 207 90% 54%; /* Soft Blue (Trust and Security) - Original */
+    /* --primary: 220 65% 55%; Adjusted Blue */
     --primary-foreground: 0 0% 100%; /* White */
 
     --secondary: 220 30% 94%; /* Lighter Cool Gray */
     --secondary-foreground: 220 25% 25%;
 
-    --muted: 220 40% 95%; /* Light Gray (Clean backdrop) - Original #F0F4F8 */
+    --muted: 220 40% 95%; /* Light Gray (Clean backdrop) */
     --muted-foreground: 220 15% 45%; 
 
-    --accent: 174 46% 52%; /* Muted Teal (Highlight important actions) - Original #4DB6AC */
+    --accent: 174 46% 52%; /* Muted Teal (Highlight important actions) - Original */
+    /* --accent: 190 60% 50%; Adjusted Teal/Cyan */
     --accent-foreground: 0 0% 100%; /* White text on accent for contrast */
 
     --destructive: 0 72.2% 50.6%; /* Standard destructive red */
@@ -44,6 +46,7 @@ body {
     --chart-5: 27 87% 67%;
     --radius: 0.75rem; /* Slightly increased radius for a softer look */
 
+    /* Sidebar specific (can be removed if not using sidebar component) */
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -89,6 +92,7 @@ body {
     --chart-4: 270 65% 60%;
     --chart-5: 320 75% 55%;
 
+    /* Sidebar specific (can be removed if not using sidebar component) */
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 260 70% 60%; /* Dark Purple */

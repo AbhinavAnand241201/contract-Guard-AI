@@ -119,7 +119,7 @@ export default function LandingPage() {
     <>
       <main className="flex-grow overflow-x-hidden">
         {/* Hero Section */}
-        <section className="relative py-20 md:py-28 lg:py-36 bg-gradient-to-br from-primary/10 via-background to-accent/5">
+        <section className="relative py-20 md:py-28 lg:py-32 bg-gradient-to-br from-primary/10 via-background to-accent/5">
           <div className="absolute inset-0 opacity-[0.03]" style={{backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%239CA3AF' fill-opacity='0.4'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414zM41 0c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zM52 26c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zM21.464 15.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }}></div>
           <div className="container mx-auto px-4 text-center relative z-10">
             <Zap className="w-16 h-16 md:w-20 md:h-20 text-primary mx-auto mb-6 animate-pulse" />
@@ -131,10 +131,10 @@ export default function LandingPage() {
               Turn complex legal documents into clear, actionable insights.
             </p>
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 md:gap-6">
-              <Button asChild size="lg" className="text-lg py-3 px-6 md:py-4 md:px-8 bg-accent text-accent-foreground hover:bg-accent/90 button-hover-effect shadow-lg hover:shadow-xl group">
+              <Button asChild size="lg" className="text-base sm:text-lg py-3 px-6 md:py-4 md:px-8 bg-accent text-accent-foreground hover:bg-accent/90 button-hover-effect shadow-lg hover:shadow-xl group">
                 <Link href="/dashboard">Get Started Free <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="text-lg py-3 px-6 md:py-4 md:px-8 border-primary text-primary hover:bg-primary/10 hover:text-primary button-hover-effect shadow-md hover:shadow-lg">
+              <Button asChild variant="outline" size="lg" className="text-base sm:text-lg py-3 px-6 md:py-4 md:px-8 border-primary text-primary hover:bg-primary/10 hover:text-primary button-hover-effect shadow-md hover:shadow-lg">
                 <Link href="/pricing">View Pricing</Link>
               </Button>
             </div>
@@ -166,7 +166,7 @@ export default function LandingPage() {
                         src={feature.imgSrc}
                         alt={feature.imgAlt}
                         fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         className="object-cover"
                         priority={index < 2}
                         quality={75}
@@ -181,8 +181,8 @@ export default function LandingPage() {
                 </Card>
               ))}
             </div>
-             <div className="text-center mt-16">
-              <Button asChild size="lg" className="text-lg py-3 px-6 md:py-4 md:px-8 bg-accent hover:bg-accent/90 text-accent-foreground button-hover-effect shadow-lg hover:shadow-xl group">
+             <div className="text-center mt-12 sm:mt-16">
+              <Button asChild size="lg" className="text-base sm:text-lg py-3 px-6 md:py-4 md:px-8 bg-accent hover:bg-accent/90 text-accent-foreground button-hover-effect shadow-lg hover:shadow-xl group">
                 <Link href="/dashboard">
                   Try ContractGuard AI Now <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </Link>
@@ -202,7 +202,7 @@ export default function LandingPage() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 text-center">
               {howItWorksSteps.map((step, index) => (
-                <div key={index} className="p-6 bg-card rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1.5 flex flex-col items-center group">
+                <div key={index} className="p-6 bg-card rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 flex flex-col items-center group">
                   <div className="bg-primary/10 text-primary rounded-full w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-6 shadow-md group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 ease-in-out">
                     {step.icon}
                   </div>
@@ -223,7 +223,7 @@ export default function LandingPage() {
                 Why Users Love ContractGuard AI
               </h2>
             </div>
-            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
               {testimonials.map((testimonial, index) => (
                 <Card key={index} className="bg-card card-hover-effect rounded-xl p-6">
                   <CardContent className="pt-0">
@@ -251,7 +251,7 @@ export default function LandingPage() {
             <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
               Join thousands of users who are saving time, reducing risk, and negotiating smarter with ContractGuard AI.
             </p>
-            <Button asChild size="lg" className="text-lg sm:text-xl py-3.5 px-8 md:py-4 md:px-10 bg-accent text-accent-foreground hover:bg-accent/90 button-hover-effect shadow-xl hover:shadow-2xl group">
+            <Button asChild size="lg" className="text-base sm:text-lg py-3.5 px-8 md:py-4 md:px-10 bg-accent text-accent-foreground hover:bg-accent/90 button-hover-effect shadow-xl hover:shadow-2xl group">
               <Link href="/dashboard">Start Your Free Trial Now <ArrowRight className="ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300" /></Link>
             </Button>
           </div>
