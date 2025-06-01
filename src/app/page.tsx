@@ -2,26 +2,22 @@
 import type { Metadata } from 'next';
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, MessageSquareText, ShieldAlert, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users } from 'lucide-react';
+import { FileText, MessageSquareText, ShieldAlert, ArrowRight, Zap, Brain, Lightbulb, CheckCircle, Users, UserCircle, Quote } from 'lucide-react';
 
 interface FeatureCardData {
   icon: React.ReactNode;
   title: string;
   description: string;
-  imgSrc: string;
-  imgAlt: string;
-  imgWidth?: number;
-  imgHeight?: number;
+  learnMoreLink?: string; 
 }
 
 interface TestimonialData {
   name: string;
   title: string;
   quote: string;
-  avatar: string;
+  icon: React.ReactNode;
 }
 
 export const metadata: Metadata = {
@@ -32,53 +28,49 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   const features: FeatureCardData[] = [
     {
-      icon: <FileText className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
+      icon: <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Contract Risk Scanner',
       description: 'Upload your contracts and our AI will scan them for potential risks, assigning a clear risk level (Low, Medium, High) with detailed reports and factors.',
-      imgSrc: '/assets/features/feature-risk-scanner.png',
-      imgAlt: 'AI Contract Risk Scanner analyzing a document',
+      learnMoreLink: '/dashboard',
     },
     {
-      icon: <MessageSquareText className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
+      icon: <MessageSquareText className="w-12 h-12 sm:w-16 sm:h-16 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'Plain-English Clause Decoder',
       description: "Don't get lost in legal jargon. Paste any complex legal clause and get an instant, easy-to-understand explanation in plain English.",
-      imgSrc: '/assets/features/feature-clause-decoder.png',
-      imgAlt: 'Legal clause being decoded into simple text',
+      learnMoreLink: '/dashboard',
     },
     {
-      icon: <ShieldAlert className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
+      icon: <ShieldAlert className="w-12 h-12 sm:w-16 sm:h-16 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'Clause Guardian AI',
       description: 'Provide your contract text, and our AI will identify potentially unfavorable clauses and offer suggestions for improvement to safeguard your interests.',
-      imgSrc: '/assets/features/feature-clause-guardian.png',
-      imgAlt: 'Shield protecting a contract document',
+      learnMoreLink: '/dashboard',
     },
     {
-      icon: <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
+      icon: <Brain className="w-12 h-12 sm:w-16 sm:h-16 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Negotiation Simulator',
       description: 'Practice high-stakes contract negotiations risk-free. Simulate conversations against AI counterparties and get feedback to improve your skills.',
-      imgSrc: '/assets/features/feature-negotiation-simulator.png',
-      imgAlt: 'Two figures in a negotiation chat simulation',
+      learnMoreLink: '/dashboard',
     },
   ];
 
   const howItWorksSteps = [
     {
-      icon: <Lightbulb className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />,
+      icon: <Lightbulb className="w-8 h-8 sm:w-10 sm:h-10 text-primary group-hover:text-accent transition-colors" />,
       title: 'Upload or Paste',
       description: 'Securely provide your contract document or specific clauses for analysis, or enter text for negotiation practice.',
     },
     {
-      icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />,
+      icon: <Zap className="w-8 h-8 sm:w-10 sm:h-10 text-primary group-hover:text-accent transition-colors" />,
       title: 'AI Analysis & Interaction',
       description: 'Our intelligent engine processes the text in seconds for risks, explanations, clause suggestions, or engages in simulated negotiation.',
     },
     {
-      icon: <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />,
+      icon: <CheckCircle className="w-8 h-8 sm:w-10 sm:h-10 text-primary group-hover:text-accent transition-colors" />,
       title: 'Get Insights & Suggestions',
       description: 'Receive clear risk reports, plain-English explanations, clause improvement ideas, or detailed negotiation feedback.',
     },
      {
-      icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 text-accent" />,
+      icon: <Users className="w-8 h-8 sm:w-10 sm:h-10 text-primary group-hover:text-accent transition-colors" />,
       title: 'Practice & Improve',
       description: 'Use the AI Simulator to practice critical conversations, build confidence, and refine your negotiation strategies.',
     },
@@ -89,19 +81,19 @@ export default function LandingPage() {
       name: "Suresh Kumar",
       title: "Freelance Consultant",
       quote: "ContractGuard AI has revolutionized how I approach client contracts. The risk scanner is a lifesaver!",
-      avatar: "/assets/avatars/avatar-suresh.png",
+      icon: <UserCircle className="w-8 h-8 text-primary mr-3 shrink-0" />,
     },
     {
       name: "Ajay Sharma",
       title: "Small Business Owner",
       quote: "The Clause Decoder saved me hours of trying to understand complex terms. And the Negotiation Simulator actually helped me close a better deal.",
-      avatar: "/assets/avatars/avatar-ajay.png",
+      icon: <UserCircle className="w-8 h-8 text-primary mr-3 shrink-0" />,
     },
     {
       name: "Abhinav Patel",
       title: "Startup Founder",
       quote: "As a new founder, legal can be intimidating. ContractGuard AI gives me confidence, especially the Clause Guardian suggestions.",
-      avatar: "/assets/avatars/avatar-abhinav.png",
+      icon: <UserCircle className="w-8 h-8 text-primary mr-3 shrink-0" />,
     }
   ];
 
@@ -152,21 +144,13 @@ export default function LandingPage() {
                     <CardTitle className="text-lg sm:text-xl font-headline group-hover:text-primary transition-colors duration-300">{feature.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="flex-grow p-5 sm:p-6 text-center flex flex-col items-center">
-                    <div className="relative w-full h-40 sm:h-48 mb-5 shadow-md group-hover:opacity-90 transition-opacity duration-300 rounded-lg overflow-hidden">
-                      <Image 
-                        src={feature.imgSrc}
-                        alt={feature.imgAlt}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                        className="object-cover"
-                        priority={index < 2}
-                        quality={75}
-                      />
-                    </div>
-                    <p className="text-muted-foreground text-sm leading-relaxed flex-grow">{feature.description}</p>
-                     <Button variant="link" asChild className="mt-4 text-primary group-hover:text-accent transition-colors duration-300">
-                        <Link href="/dashboard">Learn More <ArrowRight className="ml-1 h-4 w-4"/></Link>
-                    </Button>
+                    {/* Image block removed */}
+                    <p className="text-muted-foreground text-sm leading-relaxed flex-grow mb-4">{feature.description}</p>
+                     {feature.learnMoreLink && (
+                        <Button variant="link" asChild className="mt-auto text-primary group-hover:text-accent transition-colors duration-300">
+                            <Link href={feature.learnMoreLink}>Learn More <ArrowRight className="ml-1 h-4 w-4"/></Link>
+                        </Button>
+                     )}
                   </CardContent>
                 </Card>
               ))}
@@ -193,8 +177,8 @@ export default function LandingPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 text-center">
               {howItWorksSteps.map((step, index) => (
                 <div key={index} className="p-6 bg-card rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-1.5 flex flex-col items-center group">
-                  <div className="bg-primary/10 text-primary rounded-full w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-6 shadow-md group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 ease-in-out">
-                    {step.icon}
+                  <div className="bg-primary/10 text-primary rounded-full w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center mx-auto mb-6 shadow-md group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 ease-in-out">
+                    {React.cloneElement(step.icon as React.ReactElement, { className: "w-8 h-8 sm:w-10 sm:h-10 group-hover:text-inherit text-primary transition-colors" })}
                   </div>
                   <h3 className="text-lg sm:text-xl font-semibold mb-3 text-foreground">{step.title}</h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">{step.description}</p>
@@ -218,13 +202,16 @@ export default function LandingPage() {
                 <Card key={index} className="bg-card card-hover-effect rounded-xl p-6">
                   <CardContent className="pt-0">
                     <div className="flex items-center mb-4">
-                      <Image src={testimonial.avatar} alt={testimonial.name} width={40} height={40} className="rounded-full mr-3 border-2 border-primary/50" />
+                      {testimonial.icon}
                       <div>
                         <p className="font-semibold text-foreground">{testimonial.name}</p>
                         <p className="text-xs text-muted-foreground">{testimonial.title}</p>
                       </div>
                     </div>
-                    <p className="text-muted-foreground italic text-sm leading-relaxed">"{testimonial.quote}"</p>
+                    <div className="flex">
+                        <Quote className="w-5 h-5 text-accent/70 mr-2 shrink-0 transform -scale-x-100" />
+                        <p className="text-muted-foreground italic text-sm leading-relaxed">"{testimonial.quote}"</p>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
