@@ -15,7 +15,6 @@ interface FeatureCardData {
   imgAlt: string;
   imgWidth?: number;
   imgHeight?: number;
-  aiHint: string;
 }
 
 interface TestimonialData {
@@ -23,7 +22,6 @@ interface TestimonialData {
   title: string;
   quote: string;
   avatar: string;
-  aiHint: string;
 }
 
 export const metadata: Metadata = {
@@ -37,33 +35,29 @@ export default function LandingPage() {
       icon: <FileText className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Contract Risk Scanner',
       description: 'Upload your contracts and our AI will scan them for potential risks, assigning a clear risk level (Low, Medium, High) with detailed reports and factors.',
-      imgSrc: 'https://placehold.co/600x400.png',
-      imgAlt: 'Contract Risk Scanner illustration',
-      aiHint: 'contract document analysis',
+      imgSrc: '/assets/features/feature-risk-scanner.png',
+      imgAlt: 'AI Contract Risk Scanner analyzing a document',
     },
     {
       icon: <MessageSquareText className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'Plain-English Clause Decoder',
       description: "Don't get lost in legal jargon. Paste any complex legal clause and get an instant, easy-to-understand explanation in plain English.",
-      imgSrc: 'https://placehold.co/600x400.png',
-      imgAlt: 'Clause Decoder illustration',
-      aiHint: 'legal text simplification',
+      imgSrc: '/assets/features/feature-clause-decoder.png',
+      imgAlt: 'Legal clause being decoded into simple text',
     },
     {
       icon: <ShieldAlert className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'Clause Guardian AI',
       description: 'Provide your contract text, and our AI will identify potentially unfavorable clauses and offer suggestions for improvement to safeguard your interests.',
-      imgSrc: 'https://placehold.co/600x400.png',
-      imgAlt: 'Clause Guardian AI illustration',
-      aiHint: 'shield protection',
+      imgSrc: '/assets/features/feature-clause-guardian.png',
+      imgAlt: 'Shield protecting a contract document',
     },
     {
       icon: <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4 group-hover:text-accent transition-colors duration-300" />,
       title: 'AI Negotiation Simulator',
       description: 'Practice high-stakes contract negotiations risk-free. Simulate conversations against AI counterparties and get feedback to improve your skills.',
-      imgSrc: 'https://placehold.co/600x400.png',
-      imgAlt: 'AI Negotiation Simulator illustration',
-      aiHint: 'negotiation practice chat',
+      imgSrc: '/assets/features/feature-negotiation-simulator.png',
+      imgAlt: 'Two figures in a negotiation chat simulation',
     },
   ];
 
@@ -95,22 +89,19 @@ export default function LandingPage() {
       name: "Suresh Kumar",
       title: "Freelance Consultant",
       quote: "ContractGuard AI has revolutionized how I approach client contracts. The risk scanner is a lifesaver!",
-      avatar: "https://placehold.co/40x40.png",
-      aiHint: "man portrait"
+      avatar: "/assets/avatars/avatar-suresh.png",
     },
     {
       name: "Ajay Sharma",
       title: "Small Business Owner",
       quote: "The Clause Decoder saved me hours of trying to understand complex terms. And the Negotiation Simulator actually helped me close a better deal.",
-      avatar: "https://placehold.co/40x40.png",
-      aiHint: "person thinking"
+      avatar: "/assets/avatars/avatar-ajay.png",
     },
     {
       name: "Abhinav Patel",
       title: "Startup Founder",
       quote: "As a new founder, legal can be intimidating. ContractGuard AI gives me confidence, especially the Clause Guardian suggestions.",
-      avatar: "https://placehold.co/40x40.png",
-      aiHint: "professional headshot"
+      avatar: "/assets/avatars/avatar-abhinav.png",
     }
   ];
 
@@ -170,7 +161,6 @@ export default function LandingPage() {
                         className="object-cover"
                         priority={index < 2}
                         quality={75}
-                        data-ai-hint={feature.aiHint}
                       />
                     </div>
                     <p className="text-muted-foreground text-sm leading-relaxed flex-grow">{feature.description}</p>
@@ -228,7 +218,7 @@ export default function LandingPage() {
                 <Card key={index} className="bg-card card-hover-effect rounded-xl p-6">
                   <CardContent className="pt-0">
                     <div className="flex items-center mb-4">
-                      <Image src={testimonial.avatar} alt={testimonial.name} width={40} height={40} className="rounded-full mr-3 border-2 border-primary/50" data-ai-hint={testimonial.aiHint} />
+                      <Image src={testimonial.avatar} alt={testimonial.name} width={40} height={40} className="rounded-full mr-3 border-2 border-primary/50" />
                       <div>
                         <p className="font-semibold text-foreground">{testimonial.name}</p>
                         <p className="text-xs text-muted-foreground">{testimonial.title}</p>
